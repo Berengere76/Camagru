@@ -11,6 +11,7 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
+      - db
     networks:
       - camagru-network
 
@@ -21,8 +22,29 @@ services:
     container_name: camagru-php
     volumes:
       - ./public:/var/www/html
+    depends_on:
+      - db
     networks:
       - camagru-network
+
+  db:
+    image: mysql:5.7
+    container_name: camagru-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/sql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - camagru-network
+
+volumes:
+  db_data:
 
 networks:
   camagru-network:
