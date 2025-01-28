@@ -11,13 +11,14 @@
 </head>
 <body>
     <header>
-        <h1>Bienvenue sur Camagru</h1>
-        <form action="/login" method="post">
+        <h1>Inscription</h1>
+        <form action="/register" method="POST">
+            <input type="text" name="username" placeholder="Nom d'utilisateur" required>
             <input type="email" name="email" placeholder="Adresse e-mail" required>
             <input type="password" name="password" placeholder="Mot de passe" required>
-            <button type="submit">Se connecter</button>
+             <button type="submit">S'inscrire</button>
         </form>
-        <p>Pas encore de compte ? <a href="/views/register.php">Inscrivez-vous</a></p>
+        <p>Déjà un compte ? <a href="/views/home.php">Connectez-vous</a></p>
     </header>
 
     <div class="clouds">
