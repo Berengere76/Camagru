@@ -8,7 +8,7 @@
         <div class="home">
             <h1>Bienvenue sur Camagru</h1>
             <form action="/login" method="post">
-                <input type="email" name="email" placeholder="Adresse e-mail" required>
+                <input type="text" name="username" placeholder="Nom d'utilisateur" required>
                 <input type="password" name="password" placeholder="Mot de passe" required>
                 <button type="submit">Se connecter</button>
             </form>
