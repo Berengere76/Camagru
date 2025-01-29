@@ -1,5 +1,5 @@
 <?php
 
-require_once('views/home.php');
+require_once('views/login.php');
 
 ?>
