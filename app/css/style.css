@@ -6,9 +6,8 @@ body {
     padding: 0;
     background-image: linear-gradient(to right, #f8c8d3, #e8a0b9, #d1aad5);
     background-size: cover;
+    text-align: center;
     height: 100vh;
-    position: relative;
-    text-align: center; 
 }
 
 /* CLOUDS */
@@ -178,9 +177,11 @@ body {
     0% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-20px);
     }
+
     100% {
         transform: translateY(0);
     }
@@ -190,9 +191,11 @@ body {
     0% {
         opacity: 0;
     }
+
     50% {
         opacity: 1;
     }
+
     100% {
         opacity: 0;
     }
@@ -202,9 +205,11 @@ body {
     0% {
         transform: translateY(0) translateX(0);
     }
+
     50% {
         transform: translateY(-10px) translateX(10px);
     }
+
     100% {
         transform: translateY(0) translateX(0);
     }
@@ -214,6 +219,7 @@ body {
     0% {
         transform: translateX(0) translateY(0);
     }
+
     100% {
         transform: translateX(100vw) translateY(-100vh);
     }
@@ -224,6 +230,7 @@ body {
     0% {
         opacity: 1;
     }
+
     100% {
         opacity: 0;
     }
@@ -232,7 +239,7 @@ body {
 
 /* BOX */
 
-header {
+.home {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 2rem;
     border-radius: 15px;
@@ -240,7 +247,7 @@ header {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     color: white;
     position: absolute;
-    top: 40%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -250,7 +257,37 @@ header {
     z-index: 3;
 }
 
-header h1 {
+.header {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0 0 15px 15px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.header ul {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin-top: 0;
+}
+
+.header ul li {
+    list-style: none;
+}
+
+.logo {
+    width: 120px;
+    height: 70px;
+    margin-left: 3rem;
+}
+
+h1 {
     margin: 0;
     font-size: 2.5rem;
     color: white;
@@ -302,19 +339,40 @@ form button:hover {
 
 /* LIEN D'INSCRIPTION */
 
-header p {
+p {
     margin-top: 1rem;
     font-size: 0.9rem;
     color: #333;
 }
 
-header p a {
+p a {
     color: #4a90e2;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
-header p a:hover {
+p a:hover {
     color: #e8a0b9;
+}
+
+@media screen and (max-width: 500px) {
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .home {
+        width: 90%;
+        padding: 1rem;
+    }
+
+    .logo {
+        margin-left: 1rem;
+    }
+
+    header ul {
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
 }
