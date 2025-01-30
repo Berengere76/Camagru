@@ -1,7 +1,4 @@
-<!-- pour gerer les donnees des users dans la bdd -->
-
 <?php
-
 require_once dirname(__DIR__) . '/config/database.php';
 
 class User {
@@ -20,5 +17,4 @@ class User {
         return ($user && password_verify($password, $user["password"])) ? $user : null;
     }
 }
-
 ?>

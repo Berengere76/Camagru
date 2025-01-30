@@ -1,7 +1,4 @@
-<!-- pour se connecter a la bdd -->
-
 <?php
-
 $host = "camagru-db";
 $dbname = "camagru";
 $user = "root";
@@ -13,5 +10,4 @@ try {
 } catch (PDOException $e) {
     die("Erreur de connexion : " . $e->getMessage());
 }
-
 ?>

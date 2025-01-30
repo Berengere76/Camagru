@@ -12,6 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // exit();
             echo "Register success";
         }
+        else {
+            echo "Register failed";
+        }
     }
 }
 ?>
