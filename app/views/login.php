@@ -7,12 +7,15 @@
     <main>
         <div class="home">
             <h1>Bienvenue sur Camagru</h1>
+            <?php 
+                echo $success[0] ?? "";
+            ?>
             <form action="/controllers/login.php" method="post">
                 <input type="text" name="username" placeholder="Nom d'utilisateur" required>
                 <input type="password" name="password" placeholder="Mot de passe" required>
                 <button type="submit" name="login">Se connecter</button>
             </form>
-            <p>Pas encore de compte ? <a href="/views/register.php">Inscrivez-vous</a></p>
+            <p>Pas encore de compte ? <a href="/controllers/register.php">Inscrivez-vous</a></p>
         </div>
     </main>
 

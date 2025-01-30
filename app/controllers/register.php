@@ -8,13 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $password = $_POST["password"];
 
         if (User::register($username, $email, $password)) {
-            // header("Location: http://localhost:8000/login");
-            // exit();
-            echo "Register success";
-        }
-        else {
+            header("Location: login.php?register=success");
+            exit;
+        } else {
             echo "Register failed";
         }
     }
 }
+
+require_once dirname(__DIR__) . '/views/register.php';
+
 ?>

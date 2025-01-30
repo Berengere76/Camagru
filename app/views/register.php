@@ -13,7 +13,7 @@
                 <input type="password" name="password" placeholder="Mot de passe" required>
                 <button type="submit" name="register">S'inscrire</button>
             </form>
-            <p>Déjà un compte ? <a href="/views/login.php">Connectez-vous</a></p>
+            <p>Déjà un compte ? <a href="/controllers/login.php">Connectez-vous</a></p>
         </div>
     </main>
 

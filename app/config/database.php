@@ -1,4 +1,5 @@
 <?php
+
 $host = "camagru-db";
 $dbname = "camagru";
 $user = "root";

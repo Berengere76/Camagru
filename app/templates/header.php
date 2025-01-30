@@ -5,8 +5,8 @@
         </div>
         <nav>
             <ul>
-                <li><a href="/views/login.php">Accueil</a></li>
-                <li><a href="/views/register.php">Inscription</a></li>
+                <li><a href="/controllers/login.php">Connexion</a></li>
+                <li><a href="/controllers/register.php">Inscription</a></li>
             </ul>
         </nav>
     </div>
