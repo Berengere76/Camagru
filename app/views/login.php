@@ -7,10 +7,10 @@
     <main>
         <div class="home">
             <h1>Bienvenue sur Camagru</h1>
-            <form action="/login" method="post">
+            <form action="/controllers/login.php" method="post">
                 <input type="text" name="username" placeholder="Nom d'utilisateur" required>
                 <input type="password" name="password" placeholder="Mot de passe" required>
-                <button type="submit">Se connecter</button>
+                <button type="submit" name="login">Se connecter</button>
             </form>
             <p>Pas encore de compte ? <a href="/views/register.php">Inscrivez-vous</a></p>
         </div>

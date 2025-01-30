@@ -11,6 +11,14 @@ class User {
         $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
         return $stmt->execute([$username, $email, $hashedPassword]);
     }
+
+    public static function login($username, $password) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        $user = $stmt->fetch();
+        return ($user && password_verify($password, $user["password"])) ? $user : null;
+    }
 }
 
 ?>
