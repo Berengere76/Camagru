@@ -10,12 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $email = trim($_POST["email"]);
         $password = $_POST["password"];
 
-        if (User::register($username, $email, $password)) {
-            header("Location: /views/login.php");
-            exit;
-        } else {
-            echo "Erreur lors de l'inscription.";
-        }
+        User::register($username, $email, $password);
     }
 }
 
