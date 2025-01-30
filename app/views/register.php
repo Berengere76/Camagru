@@ -7,11 +7,11 @@
     <main>
         <div class="home">
             <h1>Inscription</h1>
-            <form action="/register" method="POST">
+            <form action="/controllers/register.php" method="post">
                 <input type="text" name="username" placeholder="Nom d'utilisateur" required>
                 <input type="email" name="email" placeholder="Adresse e-mail" required>
                 <input type="password" name="password" placeholder="Mot de passe" required>
-                <button type="submit">S'inscrire</button>
+                <button type="submit" name="register">S'inscrire</button>
             </form>
             <p>Déjà un compte ? <a href="/views/login.php">Connectez-vous</a></p>
         </div>
