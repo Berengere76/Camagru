@@ -1,7 +1,4 @@
-<!-- pour gerer l'inscription des users -->
-
 <?php
-
 require_once dirname(__DIR__) . '/models/user.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -10,8 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $email = trim($_POST["email"]);
         $password = $_POST["password"];
 
-        User::register($username, $email, $password);
+        if (User::register($username, $email, $password)) {
+            // header("Location: http://localhost:8000/login");
+            // exit();
+            echo "Register success";
+        }
     }
 }
-
 ?>
