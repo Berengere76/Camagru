@@ -8,7 +8,7 @@
 
     <?php 
     if (isset($_SESSION['username'])) {
-        echo '<h1 class="test">Bienvenue sur Camagru ' . $_SESSION['username'] . ' !</h1>';
+        echo '<h1 class="test">Bonjour ' . $_SESSION['username'] . ' !</h1>';
     }
     ?>
 
