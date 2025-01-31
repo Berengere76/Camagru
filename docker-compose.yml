@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: nginx:latest
+    image: nginx:1.26.2
     container_name: camagru-nginx
     ports:
       - "8000:80"

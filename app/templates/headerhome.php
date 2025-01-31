@@ -8,7 +8,7 @@
                 <li><a href="/controllers/home.php">Accueil</a></li>
                 <li><a href="/controllers/galerie.php">Galerie</a></li>
                 <li><a href="/controllers/profil.php">Profil</a></li>
-                <li><a href="/controllers/login.php">Se déconnecter</a></li>
+                <li><a href="/controllers/logout.php">Se déconnecter</a></li>
             </ul>
         </nav>
     </div>
