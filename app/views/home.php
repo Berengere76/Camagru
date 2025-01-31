@@ -16,6 +16,7 @@
         <video id="video" autoplay></video>
         <button id="capture" class="capture-btn">Prendre une photo</button>
     </div>
+    
     <div class=photo-container>
         <canvas id="canvas"></canvas>
     </div>
