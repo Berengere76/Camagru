@@ -390,3 +390,51 @@ p a:hover {
         padding: 0.5rem;
     }
 }
+
+
+/* WEBCAM */
+
+.camera-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.canva-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+canvas {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+.capture-btn {
+    background-color: #d1aad5;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.capture-btn:hover {
+    background-color: #e8a0b9;
+}
