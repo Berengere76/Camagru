@@ -11,6 +11,7 @@
             <div class="gallery-item">
                 <img src="/<?= htmlspecialchars($image['image_url']) ?>" alt="Image de la galerie">
                 <p>Photo prise par : <span class="username"><?= htmlspecialchars($image['username']) ?></span></p>
+                <p><?= ($image['created_at']) ?></p>
             </div>
         <?php endforeach; ?>
     </div>

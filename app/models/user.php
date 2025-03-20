@@ -25,7 +25,7 @@ class User {
 
     public static function getUserById($user_id) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt = $pdo->prepare("SELECT username, email, created_at FROM users WHERE id = ?");
         $stmt->execute([$user_id]);
         return $stmt->fetch();
     }

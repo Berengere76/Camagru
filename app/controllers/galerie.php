@@ -11,7 +11,7 @@ if (!isset($_SESSION["username"])) {
 }
 
 global $pdo;
-$stmt = $pdo->prepare("SELECT images.image_url, users.username 
+$stmt = $pdo->prepare("SELECT images.image_url, users.username, images.created_at
                        FROM images 
                        JOIN users ON images.user_id = users.id 
                        ORDER BY images.created_at DESC;");
