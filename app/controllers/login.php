@@ -4,7 +4,8 @@ require_once dirname(__DIR__) . '/models/user.php';
 session_start();
 
 $errors = [];
-$success = [];
+$success = $_SESSION["success"] ?? null;
+unset($_SESSION["success"]);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["login"])) {
@@ -16,13 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header("Location: home.php");
             exit;
         } else {
-            echo "Login failed";
+            $errors[] = "Échec de la connexion. Vérifiez vos identifiants.";
         }
     }
-}
-
-if (isset($_GET["register"]) && $_GET["register"] === "success") {
-    $success[] = "Inscription réussie";
 }
 
 require_once dirname(__DIR__) . '/views/login.php';

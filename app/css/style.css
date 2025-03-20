@@ -445,3 +445,15 @@ canvas {
 .capture-btn:hover {
     background-color: #e8a0b9;
 }
+
+.success-message {
+    color: #41addf;
+    font-weight: bold;
+    text-align: center;
+}
+
+.error-message {
+    color: #e41068;
+    font-weight: bold;
+    text-align: center;
+}
