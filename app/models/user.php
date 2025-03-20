@@ -2,6 +2,7 @@
 require_once dirname(__DIR__) . '/config/database.php';
 
 class User {
+
     public static function register($username, $email, $password) {
         global $pdo;
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ? OR email = ?");
@@ -21,5 +22,13 @@ class User {
         $user = $stmt->fetch();
         return ($user && password_verify($password, $user["password"])) ? $user : null;
     }
+
+    public static function getUserById($user_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$user_id]);
+        return $stmt->fetch();
+    }
+    
 }
 ?>
