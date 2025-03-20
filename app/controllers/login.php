@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header("Location: home.php");
             exit;
         } else {
-            $errors[] = "Échec de la connexion. Vérifiez vos identifiants.";
+            $errors[] = "Échec d'authentification";
         }
     }
 }

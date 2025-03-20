@@ -7,20 +7,19 @@
     <main>
         <div class="home">
             <h1>Bienvenue sur Camagru</h1>
-            <?php
-            if (!empty($success) || !empty($errors)): ?>
-                <?php if (!empty($success)): ?>
-                    <div class="success-message"><?= htmlspecialchars($success[0] ?? "") ?></div>
-                <?php endif; ?>
-                <?php if (!empty($errors)): ?>
-                    <div class="error-message"><?= htmlspecialchars($errors[0] ?? "") ?></div>
-                <?php endif; ?>
-                <script>
-                    setTimeout(() => {
-                        document.querySelectorAll('.success-message, .error-message').forEach(el => el.style.display = 'none');
-                    }, 5000);
-                </script>
+
+            <?php if (!empty($success)): ?>
+                <div class="success-message"><?= htmlspecialchars($success[0] ?? "") ?></div>
             <?php endif; ?>
+            <?php if (!empty($errors)): ?>
+                <div class="error-message"><?= htmlspecialchars($errors[0] ?? "") ?></div>
+            <?php endif; ?>
+            <script>
+                setTimeout(() => {
+                    document.querySelectorAll('.success-message, .error-message').forEach(el => el.style.display = 'none');
+                }, 5000);
+            </script>
+
             <form action="/controllers/login.php" method="post">
                 <input type="text" name="username" placeholder="Nom d'utilisateur" required>
                 <input type="password" name="password" placeholder="Mot de passe" required>

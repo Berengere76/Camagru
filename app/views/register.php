@@ -7,16 +7,16 @@
     <main>
         <div class="home">
             <h1>Inscription</h1>
+
             <?php if (!empty($errors)): ?>
-                <div class="error-message">
-                    <div class="error-message"><?= htmlspecialchars($errors[0] ?? "") ?></div>
-                </div>
-                <script>
-                    setTimeout(() => {
-                        document.querySelector('.error-message').style.display = 'none';
-                    }, 5000);
-                </script>
+                <div class="error-message"><?= htmlspecialchars($errors[0] ?? "") ?></div>
             <?php endif; ?>
+            <script>
+                setTimeout(() => {
+                    document.querySelector('.error-message').style.display = 'none';
+                }, 5000);
+            </script>
+
             <form action="/controllers/register.php" method="post">
                 <input type="text" name="username" placeholder="Nom d'utilisateur" required>
                 <input type="email" name="email" placeholder="Adresse e-mail" required>

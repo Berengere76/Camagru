@@ -7,7 +7,7 @@ class User {
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ? OR email = ?");
         $stmt->execute([$username, $email]);
         if ($stmt->fetchColumn() > 0) {
-            throw new Exception("Ce nom d'utilisateur ou cet email est déjà utilisé.");
+            throw new Exception("Ce nom d'utilisateur ou cet email est déjà utilisé");
         }
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");

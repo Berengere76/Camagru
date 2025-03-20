@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         try {
             User::register($username, $email, $password);
-            $_SESSION["success"][] = "Inscription réussie.";
+            $_SESSION["success"][] = "Inscription réussie";
             header("Location: login.php");
             exit;
         } catch (Exception $e) {
