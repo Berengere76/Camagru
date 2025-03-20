@@ -10,7 +10,7 @@
         <?php foreach ($images as $image): ?>
             <div class="gallery-item">
                 <img src="/<?= htmlspecialchars($image['image_url']) ?>" alt="Image de la galerie">
-                <p>Photo de : <span class="username"><?= htmlspecialchars($image['username']) ?></span></p>
+                <p>Photo prise par : <span class="username"><?= htmlspecialchars($image['username']) ?></span></p>
             </div>
         <?php endforeach; ?>
     </div>
