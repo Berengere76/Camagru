@@ -15,5 +15,14 @@ captureButton.addEventListener('click', () => {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    photo.src = canvas.toDataURL('image/png');
+    const imageData = canvas.toDataURL('image/png'); 
+
+    fetch('/controllers/save_image.php', {
+        method: 'POST',
+        body: JSON.stringify({ image: imageData }),
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.json())
+    .then(data => console.log("Réponse du serveur :", data))
+    .catch(error => console.error("Erreur :", error));
 });
