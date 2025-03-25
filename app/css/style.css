@@ -377,6 +377,27 @@ p a:hover {
 
 /* MEDIA QUERIES */
 
+@media screen and (max-width: 370px) {
+
+    header ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logo {
+        width: 90px;
+        height: 50px;
+    }
+
+    .header ul {
+        gap: 0.5rem;
+        padding: 0.5rem;
+        margin-left: 1rem;
+        font-size: 0.9rem;
+    }
+
+}
+
 @media screen and (max-width: 500px) {
 
     h1 {
@@ -384,7 +405,7 @@ p a:hover {
     }
 
     .home {
-        width: 90%;
+        width: 95%;
         padding: 1rem;
     }
 
@@ -396,8 +417,33 @@ p a:hover {
         gap: 0.5rem;
         padding: 0.5rem;
     }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
 }
 
+@media screen and (max-height: 730px) {
+
+    .home {
+        top: 50%;
+    }
+
+}
+
+@media screen and (max-height: 640px) {
+
+    .home {
+        top: 60%;
+    }
+
+}
 
 /* WEBCAM */
 
