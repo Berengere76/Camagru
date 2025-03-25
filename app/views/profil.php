@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
+
 <body>
+
 
     <header>
         <div class="header">
@@ -27,6 +29,7 @@
         </div>
     </header>
 
+
     <main>
 
     <p>Username :<span class="username"><?= htmlspecialchars($user['username']) ?></span></p>
@@ -35,9 +38,11 @@
 
     </main>
 
+
     <footer>
         <p>© Camagru 2025</p>
     </footer>
+
 
 </body>
 

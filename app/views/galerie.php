@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
+
 <body>
+
 
     <header>
         <div class="header">
@@ -26,7 +28,8 @@
             </nav>
         </div>
     </header>
-    
+
+
     <main>
 
     <div class="gallery">
@@ -41,9 +44,11 @@
      
     </main>
 
+
     <footer>
         <p>© Camagru 2025</p>
     </footer>
+
 
 </body>
 

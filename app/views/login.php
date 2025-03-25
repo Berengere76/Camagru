@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
+
 <body>
+
 
     <header>
         <div class="header">
@@ -24,6 +26,7 @@
             </nav>
         </div>
     </header>
+
 
     <main>
         <div class="home">
@@ -50,6 +53,7 @@
         </div>
     </main>
 
+
     <div class="clouds">
         <img src="../images/cloud1.png" alt="Nuage 1" class="cloud cloud1">
         <img src="../images/cloud1.png" alt="Nuage 2" class="cloud cloud2">
@@ -73,9 +77,11 @@
         <div class="shooting-star"></div>
     </div>
 
+
     <footer>
         <p>© Camagru 2025</p>
     </footer>
+
 
 </body>
 

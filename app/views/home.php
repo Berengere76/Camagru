@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
+
 <body>
+
 
     <header>
         <div class="header">
@@ -27,13 +29,8 @@
         </div>
     </header>
 
-    <main>
 
-    <?php 
-    if (isset($_SESSION['username'])) {
-        echo '<h1 class="test">Bonjour ' . $_SESSION['username'] . ' !</h1>';
-    }
-    ?>
+    <main>
 
     <div class="camera-container">
         <video id="video" autoplay></video>
@@ -48,9 +45,11 @@
 
     </main>
 
+
     <footer>
         <p>© Camagru 2025</p>
     </footer>
+
 
 </body>
 
