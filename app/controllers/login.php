@@ -10,6 +10,7 @@ unset($_SESSION["success"]);
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["login"])) {
         $username = trim($_POST["username"]);
+        $username = htmlspecialchars($username);
         $password = $_POST["password"];
     
         $user = User::login($username, $password);
