@@ -18,5 +18,7 @@ $stmt = $pdo->prepare("SELECT images.image_url, users.username, images.created_a
 $stmt->execute();
 $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-require_once dirname(__DIR__) . '/views/galerie.php';
+$imagesJson = json_encode($images);
+
+require_once dirname(__DIR__) . '/views/galerie.html';
 ?>

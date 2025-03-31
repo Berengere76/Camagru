@@ -31,19 +31,10 @@
 
 
     <main>
-
-    <div class="gallery">
-        <?php foreach ($images as $image): ?>
-            <div class="gallery-item">
-                <img src="/<?= htmlspecialchars($image['image_url']) ?>" alt="Image de la galerie">
-                <p>Photo prise par : <span class="username"><?= htmlspecialchars($image['username']) ?></span></p>
-                <p><?= ($image['created_at']) ?></p>
-            </div>
-        <?php endforeach; ?>
-    </div>
-     
+        <div class="gallery" id="gallery"></div>
     </main>
 
+    <script src="/js/galerie.js"></script> 
 
     <footer>
         <p>© Camagru 2025</p>
