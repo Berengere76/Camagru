@@ -541,3 +541,15 @@ canvas {
     font-weight: bold;
     padding: 5px;
 }
+
+.photo-date {
+    color: #fff;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.photo-info {
+    color: #fff;
+    font-size: 1rem;
+    margin-top: 5px;
+}
