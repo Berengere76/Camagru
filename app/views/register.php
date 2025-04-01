@@ -32,14 +32,7 @@
         <div class="home">
             <h1>Inscription</h1>
 
-            <?php if (!empty($errors)): ?>
-                <div class="error-message"><?= htmlspecialchars($errors[0] ?? "") ?></div>
-            <?php endif; ?>
-            <script>
-                setTimeout(() => {
-                    document.querySelector('.error-message').style.display = 'none';
-                }, 5000);
-            </script>
+            <script src="/js/messages.js"></script>
 
             <form action="/controllers/register.php" method="post">
                 <input type="text" name="username" placeholder="Nom d'utilisateur" required>

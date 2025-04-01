@@ -12,6 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 form.parentNode.insertBefore(errorMessage, form);
             }
 
+            if (data.success) {
+                const successMessage = document.createElement("div");
+                successMessage.classList.add("success-message");
+                successMessage.textContent = data.success;
+                const form = document.querySelector("form");
+                form.parentNode.insertBefore(successMessage, form);
+            }
+
             setTimeout(() => {
                 document.querySelectorAll('.success-message, .error-message')
                     .forEach(el => el.style.display = 'none');
