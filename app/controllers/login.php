@@ -3,10 +3,6 @@ require_once dirname(__DIR__) . '/models/user.php';
 
 session_start();
 
-$errors = [];
-$success = $_SESSION["success"] ?? null;
-unset($_SESSION["success"]);
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["login"])) {
         $username = trim($_POST["username"]);
@@ -21,9 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header("Location: home.php");
             exit;
         } else {
-            $errors[] = "Échec d'authentification";
+            $_SESSION["errors"] = "Nom d'utilisateur ou mot de passe incorrect";
         }
     }    
 }
 
-require_once dirname(__DIR__) . '/views/login.php';
+require_once dirname(__DIR__) . '/views/login.html';
+?>
