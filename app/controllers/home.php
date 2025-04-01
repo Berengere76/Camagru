@@ -5,5 +5,5 @@ if (!isset($_SESSION["username"])) {
     header("Location: login.php");
     exit;
 }
-require_once dirname(__DIR__) . '/views/home.php';
+require_once dirname(__DIR__) . '/views/home.html';
 ?>
