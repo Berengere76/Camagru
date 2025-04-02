@@ -8,6 +8,11 @@ body {
     background-size: cover;
     text-align: center;
     height: 100vh;
+    cursor: url(/images/cursor.png), auto;
+}
+
+a {
+    cursor: url(/images/cursor1.png), auto;
 }
 
 /* CLOUDS */
