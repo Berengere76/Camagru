@@ -10,15 +10,14 @@ if (!isset($_SESSION["username"])) {
     exit;
 }
 
-global $pdo;
-$stmt = $pdo->prepare("SELECT images.image_url, users.username, images.created_at
-                       FROM images 
-                       JOIN users ON images.user_id = users.id 
-                       ORDER BY images.created_at DESC;");
-$stmt->execute();
-$images = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$imagesJson = json_encode($images);
+// global $pdo;
+// $stmt = $pdo->prepare("SELECT images.image_url, users.username, images.created_at
+//                        FROM images 
+//                        JOIN users ON images.user_id = users.id 
+//                        ORDER BY images.created_at DESC;");
+// $stmt->execute();
+// $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// $imagesJson = json_encode($images);
 
 require_once dirname(__DIR__) . '/views/galerie.html';
 ?>

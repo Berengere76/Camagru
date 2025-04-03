@@ -15,6 +15,11 @@ a {
     cursor: url(/images/cursor1.png), auto;
 }
 
+button {
+    cursor: url(/images/cursor1.png), auto;
+}
+
+
 /* CLOUDS */
 
 .clouds {
@@ -351,7 +356,6 @@ form button {
     border-radius: 8px;
     font-size: 1.2rem;
     font-weight: bold;
-    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -455,6 +459,7 @@ p a:hover {
 
 }
 
+
 /* WEBCAM */
 
 .camera-container {
@@ -557,4 +562,60 @@ canvas {
     color: #fff;
     font-size: 1rem;
     margin-top: 5px;
+}
+
+
+/* PROFIL */
+
+.user-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.user-profile-card {
+    background-color: rgb(255, 194, 246);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 30%;
+    margin-left: 50px;
+    text-align: center;
+}
+
+.user-profile-card h2 {
+    color: #e67fdf;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+.user-details {
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 1.1em;
+    color: #de71dc;
+}
+
+.user-details p {
+    margin: 10px 0;
+    color: #de71dc;
+}
+
+.user-details strong {
+    color: #bf7ee4;
+}
+
+.edit-username-btn {
+    background-color: #ba8ee9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.edit-username-btn:hover {
+    background-color: #7b99da;
 }

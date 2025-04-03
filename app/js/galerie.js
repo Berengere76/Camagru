@@ -81,8 +81,3 @@ function timeAgo(dateString) {
     if (diffMin > 0) return `il y a ${diffMin} minute${diffMin > 1 ? "s" : ""}`;
     return "à l'instant";
 }
-
-function formatDate(dateString) {
-    const options = { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" };
-    return new Date(dateString).toLocaleDateString("fr-FR", options);
-}
