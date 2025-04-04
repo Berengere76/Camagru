@@ -20,11 +20,11 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="/controllers/home.php">Accueil</a></li>
-                    <li><a href="/controllers/galerie.php">Galerie</a></li>
-                    <li><a href="/controllers/profil.php">Profil</a></li>
-                    <li><a href="/controllers/camera.php">Caméra</a></li>
-                    <li><a href="/controllers/logout.php">Se déconnecter</a></li>
+                    <li><a href="/controllers/home.php" class="nav-link active">Accueil</a></li>
+                    <li><a href="/controllers/galerie.php" class="nav-link">Galerie</a></li>
+                    <li><a href="/controllers/profil.php" class="nav-link">Profil</a></li>
+                    <li><a href="/controllers/camera.php" class="nav-link">Caméra</a></li>
+                    <li><a href="/controllers/logout.php" class="nav-link">Se déconnecter</a></li>
                 </ul>
             </nav>
         </div>
@@ -33,7 +33,28 @@
 
     <main>
 
-
+        <section class="dashboard">
+            <h1>Bienvenue sur Camagru !</h1>
+            
+            <div class="dashboard-cards">
+                <a href="/controllers/galerie.php" class="dashboard-card">
+                    <h2>Galerie publique</h2>
+                    <img class="logohome" src="/images/logogalerie.png">
+                    <h3>Tu peux voir ici toutes les photos partagées par les utilisateurs</h3>
+                </a>
+                <a href="/controllers/camera.php" class="dashboard-card">
+                    <h2>Prendre une photo</h2>
+                    <img class="logohome" src="/images/logophoto.png">
+                    <h3>Ajoute une nouvelle photo et teste des filtres amusants</h3>
+                </a>
+                <a href="/controllers/profil.php" class="dashboard-card">
+                    <h2>Mon profil</h2>
+                    <img class="logohome" src="/images/logoprofil.png">
+                    <h3>Modifie tes infos et gère tes photos</h3>
+                </a>
+            </div>
+        </section>
+        
     </main>
 
 
