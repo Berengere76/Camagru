@@ -17,7 +17,7 @@ captureButton.addEventListener('click', () => {
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     const imageData = canvas.toDataURL('image/png'); 
 
-    fetch('/controllers/save_image.php', {
+    fetch('/controllers/camera.php', {
         method: 'POST',
         body: JSON.stringify({ image: imageData }),
         headers: { 'Content-Type': 'application/json' }
