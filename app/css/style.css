@@ -777,14 +777,14 @@ canvas {
     bottom: 0px;
     height: 2px;
     width: 0;
-    background-color: #cf83ff;
+    background-color: #f467ef;
     border-radius: 2px;
     transition: width 0.3s ease;
     pointer-events: none;
 }
 
 .nav-link:hover {
-    color: #a052d3;
+    color: #f467ef;
 }
 
 .nav-link:hover::after {
@@ -792,7 +792,7 @@ canvas {
 }
 
 .nav-link.active {
-    color: #ca84f8;
+    color: #f467ef;
 }
 
 .nav-link.active::after {
