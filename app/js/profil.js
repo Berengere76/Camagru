@@ -2,7 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const galleryContainer = document.getElementById("gallery");
 
-    fetch("/controllers/get_images_profil.php")
+	fetch('/controllers/profil.php?imageid', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
         .then(response => response.json())
         .then(images => {
             if (images.error) {

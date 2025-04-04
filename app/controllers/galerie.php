@@ -2,6 +2,7 @@
 
 require_once dirname(__DIR__) . '/config/database.php';
 require_once dirname(__DIR__) . '/models/user.php';
+require_once dirname(__DIR__) . '/models/image.php';
 
 session_start();
 
@@ -10,14 +11,13 @@ if (!isset($_SESSION["username"])) {
     exit;
 }
 
-// global $pdo;
-// $stmt = $pdo->prepare("SELECT images.image_url, users.username, images.created_at
-//                        FROM images 
-//                        JOIN users ON images.user_id = users.id 
-//                        ORDER BY images.created_at DESC;");
-// $stmt->execute();
-// $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// $imagesJson = json_encode($images);
+$images = Image::getAllImagesWithUser();
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['ajax'])) {
+    header('Content-Type: application/json');
+    echo json_encode($images);
+    exit;
+}
 
 require_once dirname(__DIR__) . '/views/galerie.html';
 ?>

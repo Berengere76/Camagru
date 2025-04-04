@@ -498,7 +498,6 @@ canvas {
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
-    cursor: pointer;
     transition: background-color 0.3s ease;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -586,7 +585,7 @@ canvas {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 30%;
+    width: 50%;
     margin-left: 50px;
     text-align: center;
 }
@@ -628,12 +627,13 @@ canvas {
 }
 
 .profile-photos {
-    width: 35%;
+    width: 40%;
     padding: 20px;
     background-color: rgb(255, 194, 246);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-left: 20px;
+    margin-top: 20px;
     display: inline-block;
     vertical-align: top;
 }

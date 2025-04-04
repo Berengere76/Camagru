@@ -1,35 +1,10 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//     const galleryContainer = document.getElementById("gallery");
-
-//     fetch("/controllers/get_images.php")
-//         .then(response => response.json())
-//         .then(images => {
-//             if (images.error) {
-//                 galleryContainer.innerHTML = `<p>${images.error}</p>`;
-//                 return;
-//             }
-
-//             galleryContainer.innerHTML = images.map(image => `
-//                 <div class="gallery-item">
-//                     <img src="/${image.image_url}" alt="Image de la galerie">
-//                     <p>Photo prise par : <span class="username">${escapeHTML(image.username)}</span></p>
-//                     <p>${image.created_at}</p>
-//                 </div>
-//             `).join("");
-//         })
-//         .catch(error => {
-//             console.error("Erreur lors du chargement des images:", error);
-//             galleryContainer.innerHTML = "<p>Impossible de charger les images.</p>";
-//         });
-// });
-
-// function escapeHTML(str) {
-//     return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-// }
-
-
 document.addEventListener("DOMContentLoaded", function () {
-    fetch('/controllers/get_images.php')
+    fetch('/controllers/galerie.php?ajax', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
         .then(response => response.json())
         .then(images => {
             const galleryContainer = document.querySelector(".gallery");
@@ -80,4 +55,9 @@ function timeAgo(dateString) {
     if (diffHrs > 0) return `il y a ${diffHrs} heure${diffHrs > 1 ? "s" : ""}`;
     if (diffMin > 0) return `il y a ${diffMin} minute${diffMin > 1 ? "s" : ""}`;
     return "à l'instant";
+}
+
+function formatDate(dateString) {
+    const options = { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" };
+    return new Date(dateString).toLocaleDateString("fr-FR", options);
 }

@@ -1,6 +1,8 @@
 <?php
 require_once dirname(__DIR__) . '/config/database.php';
 require_once dirname(__DIR__) . '/models/user.php';
+require_once dirname(__DIR__) . '/models/image.php';
+
 session_start();
 
 if (!isset($_SESSION["username"])) {
@@ -8,7 +10,7 @@ if (!isset($_SESSION["username"])) {
     exit;
 }
 
-if (isset($_GET['test'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['test'])) {
     header("Content-Type: application/json");
 
     $user = User::getUserById($_SESSION["user_id"]);
@@ -20,6 +22,21 @@ if (isset($_GET['test'])) {
     }
 
     echo json_encode($user);
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['imageid'])) {
+    header("Content-Type: application/json");
+
+    $images = Image::getImagesByUserId($_SESSION["user_id"]);
+
+    if (!$images) {
+        http_response_code(404);
+        echo json_encode(["error" => "Aucune image trouvée"]);
+        exit;
+    }
+
+    echo json_encode($images);
     exit;
 }
 
