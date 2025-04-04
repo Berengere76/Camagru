@@ -631,6 +631,7 @@ canvas {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     margin-top: 20px;
 }
