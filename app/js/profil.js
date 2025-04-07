@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             galleryContainer.innerHTML = images.map(image => `
                 <div class="gallery-item">
                     <img src="/${image.image_url}" alt="Image de la galerie">
-                    <button class="delete-btn">Supprimer</button>
+                    <button class="delete-btn" data-url="${image.image_url}">Supprimer</button>
                 </div>
             `).join("");
         })
@@ -26,6 +26,37 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Erreur lors du chargement des images:", error);
             galleryContainer.innerHTML = "<p>Impossible de charger les images.</p>";
         });
+
+        galleryContainer.addEventListener("click", function(e) {
+            if (e.target.classList.contains("delete-btn")) {
+                const imageUrl = e.target.dataset.url;
+
+                const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette image ?");
+                if (!confirmation) return;
+        
+                fetch('/controllers/profil.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        action: 'delete',
+                        image_url: imageUrl
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        e.target.parentElement.remove();
+                    } else {
+                        alert("Erreur : " + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur de suppression :", error);
+                });
+            }
+        });        
 
     fetch('/controllers/profil.php?test', {
         method: 'GET',

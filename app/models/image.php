@@ -23,4 +23,17 @@ class Image {
         $stmt->execute([$user_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function deleteImage($user_id, $image_url) {
+        global $pdo;
+ 
+        $filePath = dirname(__DIR__) . '/' . $image_url;
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+    
+        $stmt = $pdo->prepare("DELETE FROM images WHERE user_id = ? AND image_url = ?");
+        return $stmt->execute([$user_id, $image_url]);
+    }
+    
 }
