@@ -436,7 +436,8 @@ p a:hover {
         box-sizing: border-box;
     }
 
-    html, body {
+    html,
+    body {
         width: 100%;
         overflow-x: hidden;
     }
@@ -583,25 +584,27 @@ canvas {
     width: 100%;
     margin: 0 auto 20px auto;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .user-profile-card h2 {
     color: #ffffff;
-    font-size: 1.8em;
+    font-size: 1.5em;
     margin-bottom: 15px;
+    margin-top: 10px;
 }
 
 .user-details {
     margin-bottom: 20px;
     text-align: left;
-    font-size: 1.1em;
+    font-size: 1em;
     color: #de71dc;
 }
 
 .user-details p {
     margin: 10px 0;
     color: #de71dc;
-    font-size: 1.1em;
+    font-size: 1em;
 }
 
 .user-details strong {
@@ -633,20 +636,19 @@ canvas {
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
-    margin-top: 20px;
 }
 
 .profile-photos h3 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #ffffff;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
     font-weight: 600;
+    margin-top: 10px;
 }
 
 .gallery-item {
     position: relative;
-    margin-bottom: 20px;
     border-radius: 10px;
     overflow: hidden;
     border: 2px solid #e67fdf;
@@ -693,6 +695,7 @@ canvas {
     .profile-photos {
         width: 100%;
     }
+
     .gallery-item {
         width: 100%;
         margin-right: 0;
@@ -738,13 +741,13 @@ canvas {
     width: 250px;
     text-decoration: none;
     color: #333;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .dashboard-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .logohome {
@@ -818,10 +821,73 @@ canvas {
     0% {
         opacity: 0;
     }
+
     50% {
         opacity: 1;
     }
+
     100% {
         opacity: 0;
     }
+}
+
+
+#updateForm {
+    background-color: #dfaef9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin-left: 45px;
+    margin-right: auto;
+}
+
+#updateForm h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    text-align: center;
+    color: #f968dc;
+}
+
+#updateForm input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+#updateForm input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+#updateForm button {
+    background-color: #f55cdb;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#updateForm button:hover {
+    background-color: #f9a3f1;
+}
+
+#updateForm .btn-secondary {
+    background-color: #9665ff;
+    margin-top: 10px;
+}
+
+#updateForm .btn-secondary:hover {
+    background-color: #c0a1fd;
 }

@@ -23,13 +23,13 @@ captureButton.addEventListener('click', () => {
         body: JSON.stringify({ image: imageData }),
         headers: { 'Content-Type': 'application/json' }
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Réponse du serveur :", data);
-        message.style.display = 'block';
-        setTimeout(() => {
-            message.style.display = 'none';
-        }, 2000);
-    })
-    .catch(error => console.error("Erreur :", error));
+        .then(response => response.json())
+        .then(data => {
+            console.log("Réponse du serveur :", data);
+            message.style.display = 'block';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2000);
+        })
+        .catch(error => console.error("Erreur :", error));
 });

@@ -10,7 +10,7 @@ if (!isset($_SESSION["username"])) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['test'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['info_profil'])) {
     header("Content-Type: application/json");
 
     $user = User::getUserById($_SESSION["user_id"]);
@@ -40,7 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['imageid'])) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'] ?? '', 'application/json') !== false) {
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true);
+    if (is_array($data)) {
+        $_POST = $data;
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     header("Content-Type: application/json");
 
     $imageUrl = $_POST['image_url'] ?? null;
@@ -55,6 +63,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         echo json_encode(["success" => true]);
     } else {
         echo json_encode(["error" => "Échec de la suppression"]);
+    }
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
+
+    $user_id = $_SESSION["user_id"];
+    $username = trim($_POST['username']);
+    $username = htmlspecialchars($username);
+    $password = $_POST['password'];
+    $password = htmlspecialchars($password);
+    $new_password = $_POST['new_password'];
+    $new_password = htmlspecialchars($new_password);
+
+    $user = User::getUserById($user_id);
+
+    if (password_verify($password, $user['password'])) {
+        $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
+
+        if (User::updateUser($user_id, $username, $hashed_new_password)) {
+            $_SESSION['username'] = $username;
+            echo json_encode(["success" => "Mise à jour réussie"]);
+        } else {
+            echo json_encode(["error" => "Erreur de mise à jour"]);
+        }
+    } else {
+        echo json_encode(["error" => "Mot de passe actuel incorrect"]);
     }
     exit;
 }

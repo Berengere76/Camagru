@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 img.alt = "Image de la galerie";
 
                 const usernameText = document.createElement("span");
-				usernameText.classList.add("photo-info");
+                usernameText.classList.add("photo-info");
                 usernameText.textContent = "Photo prise par : ";
 
                 const usernameSpan = document.createElement("span");
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 usernameSpan.textContent = image.username;
 
                 const dateText = document.createElement("span");
-				dateText.classList.add("photo-date");
+                dateText.classList.add("photo-date");
                 dateText.textContent = timeAgo(image.created_at);
 
                 usernameText.appendChild(usernameSpan);
