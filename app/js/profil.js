@@ -77,9 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const formattedDate = formatDate(user.created_at);
-            const userr = document.getElementById("userr");
-            userr.innerHTML = `
-                <div class="user-profile-card">
+            const userProfilCard = document.getElementById("user-profil-card");
+            userProfilCard.innerHTML = `
                     <h2>Profil de ${user.username}</h2>
                     <div class="user-details">
                         <p><strong>Email</strong> ${user.email}</p>
@@ -88,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="user-actions">
                         <button class="edit-username-btn">Modifier le profil</button>
                     </div>
-                </div>
+                
             `;
 
             const editUsernameBtn = document.querySelector(".edit-username-btn");
@@ -99,26 +98,26 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(error => console.error("Erreur:", error));
 
     function openUpdateForm() {
-        const formHTML = `
-            <div id="updateForm">
-                <h3>Modifier votre profil</h3>
-                <form id="updateProfileForm" method="POST" action="/controllers/profil.php">
-                    <input type="text" id="username" name="username" placeholder="Nouveau nom d'utilisateur">
-                    <input type="password" id="password" name="password" placeholder="Mot de passe actuel">
-                    <input type="password" id="new_password" name="new_password" placeholder="Nouveau mot de passe">
-                    <button type="submit" name="update" class="btn btn-primary">Mettre à jour</button>
-                    <button type="button" class="btn btn-secondary" id="cancelUpdate">Annuler</button>
-                </form>
-            </div>
-        `;
-
-        const userrContainer = document.getElementById("userr");
-        userrContainer.innerHTML += formHTML;
+        // let formHTML = `
+        //     <div id="updateForm">
+        //         <h3>Modifier votre profil</h3>
+        //         <form id="updateProfileForm" method="POST" action="/controllers/profil.php">
+        //             <input type="text" id="username" name="username" placeholder="Nouveau nom d'utilisateur">
+        //             <input type="password" id="password" name="password" placeholder="Mot de passe actuel">
+        //             <input type="password" id="new_password" name="new_password" placeholder="Nouveau mot de passe">
+        //             <button type="submit" name="update" class="btn btn-primary">Mettre à jour</button>
+        //             <button type="button" class="btn btn-secondary" id="cancelUpdate">Annuler</button>
+        //         </form>
+        //     </div>
+        // `;
+        const updateForm = document.getElementById("updateForm");
+        updateForm.style.display = "block";
+               // const userrContainer = document.getElementById("userr");
+        // userrContainer.innerHTML += formHTML;
 
         const cancelButton = document.getElementById("cancelUpdate");
         cancelButton.addEventListener("click", () => {
-            document.getElementById("updateForm").remove();
-            location.reload();
+            updateForm.style.display = "none";
         });
 
         const updateFormSubmit = document.getElementById("updateProfileForm");
@@ -130,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 username: username,
                 password: password,
                 new_password: newPassword
-            };        
+            };
         })
     }
 });

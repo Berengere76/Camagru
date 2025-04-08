@@ -91,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     } else {
         echo json_encode(["error" => "Mot de passe actuel incorrect"]);
     }
-    exit;
 }
 
 require_once dirname(__DIR__) . '/views/profil.html';
