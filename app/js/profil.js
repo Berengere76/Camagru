@@ -117,12 +117,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const cancelButton = document.getElementById("cancelUpdate");
         cancelButton.addEventListener("click", () => {
-            document.getElementById("updateForm").style.display = 'none';
+            document.getElementById("updateForm").remove();
+            location.reload();
         });
 
         const updateFormSubmit = document.getElementById("updateProfileForm");
-        updateFormSubmit.addEventListener("submit", async function (event) {
-
+        updateFormSubmit.addEventListener("submit", async function () {
             const username = document.getElementById("username").value.trim();
             const password = document.getElementById("password").value.trim();
             const newPassword = document.getElementById("new_password").value.trim();
