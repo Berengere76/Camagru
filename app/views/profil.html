@@ -36,24 +36,34 @@
     <div class="skurtcontainer">
 
         <div id="user-profil-card" class="user-profile-card"></div>
-        <div id="updateForm" style="display: none;">
-            <h3>Modifier votre profil</h3>
-            <form id="updateProfileForm" method="POST" action="/controllers/profil.php">
+
+        <div id="message-container"></div>
+
+        <div id="updateUsername" style="display: none;">
+            <h3>Modifier votre nom d'utilisateur</h3>
+            <form id="updateUsernameForm" method="POST" action="/controllers/profil.php">
                 <input type="text" id="username" name="username" placeholder="Nouveau nom d'utilisateur">
-                <input type="password" id="password" name="password" placeholder="Mot de passe actuel">
-                <input type="password" id="new_password" name="new_password" placeholder="Nouveau mot de passe">
-                <button type="submit" name="update" class="btn btn-primary">Mettre à jour</button>
+                <button type="submit" name="updateUsername" class="btn btn-primary">Mettre à jour</button>
                 <button type="button" class="btn btn-secondary" id="cancelUpdate">Annuler</button>
             </form>
         </div>
+
+        <div id="updatePassword" style="display: none;">
+            <h3>Modifier votre mot de passe</h3>
+            <form id="updatePasswordForm" method="POST" action="/controllers/profil.php">
+                <input type="password" id="password" name="password" placeholder="Mot de passe actuel">
+                <input type="password" id="new_password" name="new_password" placeholder="Nouveau mot de passe">
+                <button type="submit" name="updatePassword" class="btn btn-primary">Mettre à jour</button>
+                <button type="button" class="btn btn-secondary" id="cancelUpdatePassword">Annuler</button>
+            </form>
+        </div>
+
         <div class="profile-photos">
             <h3>Vos photos</h3>
             <div class="gallery" id="gallery"></div>
         </div>
 
     </div>
-    
-    <script src="/js/profil.js" defer></script>
 
     </main>
 
@@ -61,6 +71,10 @@
     <footer>
         <p>© Camagru 2025</p>
     </footer>
+
+
+    <script src="/js/profil.js" defer></script>
+    <script src="/js/messages.js"></script>
 
 
 </body>

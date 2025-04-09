@@ -30,10 +30,21 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function updateUser($user_id, $username, $new_password) {
+    public static function updatePassword($user_id, $new_password) {
         global $pdo;
-        $stmt = $pdo->prepare("UPDATE users SET username = ?, password = ? WHERE id = ?");
-        return $stmt->execute([$username, $new_password, $user_id]);
+        $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+        return $stmt->execute([$new_password, $user_id]);
+    }
+
+    public static function updateUsername($user_id, $new_username) {
+        global $pdo;
+        $checkStmt = $pdo->prepare("SELECT id FROM users WHERE username = ?");
+        $checkStmt->execute([$new_username]);
+        if ($checkStmt->fetch()) {
+            throw new Exception("Ce nom d'utilisateur est déjà utilisé");
+        }
+        $stmt = $pdo->prepare("UPDATE users SET username = ? WHERE id = ?");
+        return $stmt->execute([$new_username, $user_id]);
     }
     
 }

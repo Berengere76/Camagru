@@ -67,29 +67,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
 
     $user_id = $_SESSION["user_id"];
-    $username = trim($_POST['username']);
-    $username = htmlspecialchars($username);
-    $password = $_POST['password'];
-    $password = htmlspecialchars($password);
-    $new_password = $_POST['new_password'];
-    $new_password = htmlspecialchars($new_password);
-
-    $user = User::getUserById($user_id);
+    $password = htmlspecialchars($_POST['password']);
+    $new_password = htmlspecialchars($_POST['new_password']);
 
     if (password_verify($password, $user['password'])) {
         $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
 
-        if (User::updateUser($user_id, $username, $hashed_new_password)) {
-            $_SESSION['username'] = $username;
+        if (User::updatePassword($user_id, $hashed_new_password)) {
             echo json_encode(["success" => "Mise à jour réussie"]);
         } else {
             echo json_encode(["error" => "Erreur de mise à jour"]);
         }
     } else {
         echo json_encode(["error" => "Mot de passe actuel incorrect"]);
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUsername'])) {
+
+    $user_id = $_SESSION["user_id"];
+    $username = htmlspecialchars($_POST['username']);
+    try {
+        User::updateUsername($user_id, $username);
+        $_SESSION["username"] = $username;
+        $_SESSION["success"] = "Modification réussie";
+    } catch (Exception $e) {
+        $_SESSION["errors"] = $e->getMessage();
     }
 }
 

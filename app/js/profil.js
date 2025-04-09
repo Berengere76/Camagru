@@ -85,53 +85,63 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p><strong>Inscrit depuis le</strong> ${formattedDate}</p>
                     </div>
                     <div class="user-actions">
-                        <button class="edit-username-btn">Modifier le profil</button>
+                        <button class="edit-username-btn">Modifier le nom d'utilisateur</button>
+                        <button class="edit-password-btn">Modifier le mot de passe</button>
                     </div>
                 
             `;
 
             const editUsernameBtn = document.querySelector(".edit-username-btn");
             editUsernameBtn.addEventListener("click", () => {
-                openUpdateForm(user.username);
+                openUpdateUsernameForm(user.username);
+            });
+
+            const editPasswordBtn = document.querySelector(".edit-password-btn");
+            editPasswordBtn.addEventListener("click", () => {
+                openUpdatePasswordForm(user.username);
             });
         })
         .catch(error => console.error("Erreur:", error));
 
-    function openUpdateForm() {
-        // let formHTML = `
-        //     <div id="updateForm">
-        //         <h3>Modifier votre profil</h3>
-        //         <form id="updateProfileForm" method="POST" action="/controllers/profil.php">
-        //             <input type="text" id="username" name="username" placeholder="Nouveau nom d'utilisateur">
-        //             <input type="password" id="password" name="password" placeholder="Mot de passe actuel">
-        //             <input type="password" id="new_password" name="new_password" placeholder="Nouveau mot de passe">
-        //             <button type="submit" name="update" class="btn btn-primary">Mettre à jour</button>
-        //             <button type="button" class="btn btn-secondary" id="cancelUpdate">Annuler</button>
-        //         </form>
-        //     </div>
-        // `;
-        const updateForm = document.getElementById("updateForm");
-        updateForm.style.display = "block";
-               // const userrContainer = document.getElementById("userr");
-        // userrContainer.innerHTML += formHTML;
-
-        const cancelButton = document.getElementById("cancelUpdate");
-        cancelButton.addEventListener("click", () => {
-            updateForm.style.display = "none";
-        });
-
-        const updateFormSubmit = document.getElementById("updateProfileForm");
-        updateFormSubmit.addEventListener("submit", async function () {
-            const username = document.getElementById("username").value.trim();
-            const password = document.getElementById("password").value.trim();
-            const newPassword = document.getElementById("new_password").value.trim();
-            const body = {
-                username: username,
-                password: password,
-                new_password: newPassword
-            };
-        })
-    }
+        function openUpdatePasswordForm() {
+            const updatePasswordForm = document.getElementById("updatePassword");
+            updatePasswordForm.style.display = "block";
+            const cancelButton = document.getElementById("cancelUpdatePassword");
+            cancelButton.addEventListener("click", () => {
+                updatePasswordForm.style.display = "none";
+            });
+        
+            const updateFormSubmit = document.getElementById("updatePasswordForm");
+            updateFormSubmit.addEventListener("submit", async function () {
+                const password = document.getElementById("password").value.trim();
+                const newPassword = document.getElementById("new_password").value.trim();
+                const body = {
+                    password: password,
+                    new_password: newPassword
+                };
+            });
+        }
+        
+        function openUpdateUsernameForm() {
+            const updateUsernameForm = document.getElementById("updateUsername");
+            updateUsernameForm.style.display = "block";
+            const cancelButton = document.getElementById("cancelUpdate");
+            cancelButton.addEventListener("click", () => {
+                updateUsernameForm.style.display = "none";
+            });
+        
+            const updateFormSubmit = document.getElementById("updateUsernameForm");
+            updateFormSubmit.addEventListener("submit", async function () {
+                if (user.username === username) {
+                    alert("Le nom d'utilisateur est identique à l'ancien.");
+                    return;
+                }
+                const username = document.getElementById("username").value.trim();
+                const body = {
+                    username: username
+                };
+            });
+        }        
 });
 
 
