@@ -10,6 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $email = trim($_POST["email"]);
         $password = $_POST["password"];
 
+        if (empty($username) || empty($email) || empty($password)) {
+            $_SESSION["errors"] = "Tous les champs sont obligatoires";
+            header("Location: register.php");
+            exit;
+        }
+
         try {
             User::register($username, $email, $password);
             $_SESSION["success"] = "Inscription réussie";

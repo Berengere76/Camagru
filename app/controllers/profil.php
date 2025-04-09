@@ -98,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUsername'])) {
 
     $user_id = $_SESSION["user_id"];
     $username = htmlspecialchars($_POST['username']);
+    $username = trim($username);
 
     $user = User::getUserById($user_id);
 
