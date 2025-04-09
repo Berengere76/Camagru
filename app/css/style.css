@@ -581,7 +581,7 @@ canvas {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 70%;
+    width: 50%;
     margin: auto;
     text-align: center;
     margin-bottom: 10px;
@@ -622,7 +622,21 @@ canvas {
     transition: background-color 0.3s;
 }
 
+.edit-password-btn {
+    background-color: #ba8ee9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
 .edit-username-btn:hover {
+    background-color: #7b99da;
+}
+
+.edit-password-btn:hover {
     background-color: #7b99da;
 }
 
@@ -832,16 +846,18 @@ canvas {
 }
 
 
-#updateForm {
+/* UPDATE USERNAME */
+
+#updateUsername {
     background-color: #dfaef9;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 50%;
+    width: 30%;
     margin: auto;
 }
 
-#updateForm h3 {
+#updateUsername h3 {
     font-size: 20px;
     margin-bottom: 20px;
     margin-top: 5px;
@@ -849,7 +865,7 @@ canvas {
     color: #f968dc;
 }
 
-#updateForm input {
+#updateUsername input {
     width: 90%;
     padding: 10px;
     margin-bottom: 10px;
@@ -858,7 +874,7 @@ canvas {
     font-size: 15px;
 }
 
-#updateForm input[type="password"] {
+#updateUsername input[type="password"] {
     width: 90%;
     padding: 10px;
     margin-bottom: 10px;
@@ -867,7 +883,7 @@ canvas {
     font-size: 15px;
 }
 
-#updateForm button {
+#updateUsername button {
     background-color: #f55cdb;
     color: white;
     border: none;
@@ -878,15 +894,77 @@ canvas {
     margin-top: 10px;
 }
 
-#updateForm button:hover {
+#updateUsername button:hover {
     background-color: #f9a3f1;
 }
 
-#updateForm .btn-secondary {
+#updateUsername .btn-secondary {
     background-color: #9665ff;
     margin-top: 10px;
 }
 
-#updateForm .btn-secondary:hover {
+#updateUsername .btn-secondary:hover {
+    background-color: #c0a1fd;
+}
+
+
+/* UPDATE PASSWORD */
+
+#updatePassword {
+    background-color: #dfaef9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    margin: auto;
+}
+
+#updatePassword h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    text-align: center;
+    color: #f968dc;
+}
+
+#updatePassword input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+#updatePassword input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+#updatePassword button {
+    background-color: #f55cdb;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#updatePassword button:hover {
+    background-color: #f9a3f1;
+}
+
+#updatePassword .btn-secondary {
+    background-color: #9665ff;
+    margin-top: 10px;
+}
+
+#updatePassword .btn-secondary:hover {
     background-color: #c0a1fd;
 }
