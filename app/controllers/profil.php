@@ -73,16 +73,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
     $password = htmlspecialchars($_POST['password']);
     $new_password = htmlspecialchars($_POST['new_password']);
 
+    $user = User::getUserById($user_id);
+
+    if (empty($password) || empty($new_password)) {
+        $_SESSION["errors"] = "Tous les champs sont obligatoires";
+        header("Location: profil.php");
+        exit;
+    }
+
     if (password_verify($password, $user['password'])) {
         $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
-
-        if (User::updatePassword($user_id, $hashed_new_password)) {
-            echo json_encode(["success" => "Mise à jour réussie"]);
-        } else {
-            echo json_encode(["error" => "Erreur de mise à jour"]);
+        try {
+            User::updatePassword($user_id, $hashed_new_password);
+            $_SESSION["success"] = "Modification réussie";
+        } catch (Exception $e) {
+            $_SESSION["errors"] = $e->getMessage();
         }
     } else {
-        echo json_encode(["error" => "Mot de passe actuel incorrect"]);
+        $_SESSION["errors"] = "Le mot de passe actuel est incorrect";
     }
 }
 
@@ -90,6 +98,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUsername'])) {
 
     $user_id = $_SESSION["user_id"];
     $username = htmlspecialchars($_POST['username']);
+
+    $user = User::getUserById($user_id);
+
+    if (empty($username)) {
+        $_SESSION["errors"] = "Le nom d'utilisateur ne peut pas être vide";
+        header("Location: profil.php");
+        exit;
+    }
+
     try {
         User::updateUsername($user_id, $username);
         $_SESSION["username"] = $username;
