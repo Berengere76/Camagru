@@ -2,22 +2,20 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("/controllers/get_messages.php")
         .then(response => response.json())
         .then(data => {
-            const homeContainer = document.querySelector(".home");
+            const container = document.getElementById("message-container");
 
             if (data.errors) {
                 const errorMessage = document.createElement("div");
                 errorMessage.classList.add("error-message");
                 errorMessage.textContent = data.errors;
-                const form = document.querySelector("form");
-                form.parentNode.insertBefore(errorMessage, form);
+                container.appendChild(errorMessage);
             }
 
             if (data.success) {
                 const successMessage = document.createElement("div");
                 successMessage.classList.add("success-message");
                 successMessage.textContent = data.success;
-                const form = document.querySelector("form");
-                form.parentNode.insertBefore(successMessage, form);
+                container.appendChild(successMessage);
             }
 
             setTimeout(() => {
