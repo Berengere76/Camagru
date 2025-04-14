@@ -7,34 +7,23 @@ document.addEventListener("DOMContentLoaded", function () {
     })
         .then(response => response.json())
         .then(images => {
+            if (images.error) {
+                document.querySelector(".gallery").innerHTML = `<p>${images.error}</p>`;
+                return;
+            }
             const galleryContainer = document.querySelector(".gallery");
-
-            images.forEach(image => {
-                const galleryItem = document.createElement("div");
-                galleryItem.classList.add("gallery-item");
-
-                const img = document.createElement("img");
-                img.src = `/${image.image_url}`;
-                img.alt = "Image de la galerie";
-
-                const usernameText = document.createElement("span");
-                usernameText.classList.add("photo-info");
-                usernameText.textContent = "Photo prise par : ";
-
-                const usernameSpan = document.createElement("span");
-                usernameSpan.classList.add("username");
-                usernameSpan.textContent = image.username;
-
-                const dateText = document.createElement("span");
-                dateText.classList.add("photo-date");
-                dateText.textContent = timeAgo(image.created_at);
-
-                usernameText.appendChild(usernameSpan);
-                galleryItem.appendChild(img);
-                galleryItem.appendChild(usernameText);
-                galleryItem.appendChild(dateText);
-                galleryContainer.appendChild(galleryItem);
-            });
+            galleryContainer.innerHTML = images.map(image => `
+                <div class="gallery-item">
+                    <a href="/controllers/image.php?imageid=${image.image_id}">
+                        <img src="/${image.image_url}" alt="Image de la galerie">
+                    </a>
+                    <div class="image-info">
+                    <span class="photo-info">Photo prise par : </span>
+                    <span class="username">${image.username}</span>
+                    <span class="photo-date">${timeAgo(image.created_at)}</span>
+                    </div>
+                </div>
+            `).join("");
         })
         .catch(error => {
             console.error("Erreur lors du chargement des images :", error);

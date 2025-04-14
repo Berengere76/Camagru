@@ -14,10 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 galleryContainer.innerHTML = `<p>${images.error}</p>`;
                 return;
             }
-
             galleryContainer.innerHTML = images.map(image => `
                 <div class="gallery-item">
+                    <a href="/controllers/image.php${image.image_id}">
                     <img src="/${image.image_url}" alt="Image de la galerie">
+                    </a>
                     <button class="delete-btn" data-url="${image.image_url}">Supprimer</button>
                 </div>
             `).join("");
