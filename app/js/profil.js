@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             galleryContainer.innerHTML = images.map(image => `
                 <div class="gallery-item">
-                    <a href="/controllers/image.php${image.image_id}">
+                    <a href="/controllers/image.php?imageid=${image.id}">
                     <img src="/${image.image_url}" alt="Image de la galerie">
                     </a>
                     <button class="delete-btn" data-url="${image.image_url}">Supprimer</button>

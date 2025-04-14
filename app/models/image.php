@@ -10,7 +10,7 @@ class Image {
 
     public static function getAllImagesWithUser() {
         global $pdo;
-        $stmt = $pdo->query("SELECT images.image_url, users.username, images.created_at 
+        $stmt = $pdo->query("SELECT images.id, images.image_url, users.username, images.created_at 
                              FROM images 
                              INNER JOIN users ON images.user_id = users.id 
                              ORDER BY images.created_at DESC");
@@ -19,7 +19,7 @@ class Image {
 
     public static function getImagesByUserId($user_id) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT image_url, created_at FROM images WHERE user_id = ? ORDER BY created_at DESC");
+        $stmt = $pdo->prepare("SELECT id, image_url, created_at FROM images WHERE user_id = ? ORDER BY created_at DESC");
         $stmt->execute([$user_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

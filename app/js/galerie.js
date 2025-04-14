@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const galleryContainer = document.querySelector(".gallery");
             galleryContainer.innerHTML = images.map(image => `
                 <div class="gallery-item">
-                    <a href="/controllers/image.php?imageid=${image.image_id}">
+                    <a href="/controllers/image.php?imageid=${image.id}">
                         <img src="/${image.image_url}" alt="Image de la galerie">
                     </a>
                     <div class="image-info">
