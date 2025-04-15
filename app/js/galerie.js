@@ -17,10 +17,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     <a href="/controllers/image.php?imageid=${image.id}">
                         <img src="/${image.image_url}" alt="Image de la galerie">
                     </a>
+                    <div class="comments-likes">
+                    <div class="likes-section">
+                        <span class="count">10</span>
+                        <img src="/images/like.png" alt="Likes" class="logo">
+                    </div>
+                    <div class="comments-section">
+                        <span class="count">10</span>
+                        <img src="/images/comment.png" alt="Comments" class="logo">
+                    </div>
+                    </div>
                     <div class="image-info">
-                    <span class="photo-info">Photo prise par : </span>
-                    <span class="username">${image.username}</span>
-                    <span class="photo-date">${timeAgo(image.created_at)}</span>
+                        <span class="username">${image.username}</span>
+                        <span class="photo-date">${timeAgo(image.created_at)}</span>
                     </div>
                 </div>
             `).join("");

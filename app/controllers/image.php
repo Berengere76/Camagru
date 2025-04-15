@@ -10,5 +10,18 @@ if (!isset($_SESSION["username"])) {
     exit;
 }
 
+if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["imageid"]) && isset($_GET["ajax"])) {
+    header("Content-Type: application/json");
+    $image = Image::getImageById($_GET["imageid"]);
+    if (!$image) {
+        http_response_code(404);
+        echo json_encode(["error" => "Image non trouvée"]);
+        exit;
+    }
+
+    echo json_encode($image);
+    exit;
+}
+
 require_once dirname(__DIR__) . '/views/image.html';
 ?>

@@ -35,5 +35,14 @@ class Image {
         $stmt = $pdo->prepare("DELETE FROM images WHERE user_id = ? AND image_url = ?");
         return $stmt->execute([$user_id, $image_url]);
     }
-    
+
+    public static function getImageById($image_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT images.image_url, images.created_at, users.username
+                               FROM images 
+                               INNER JOIN users ON images.user_id = users.id 
+                               WHERE images.id = ?");
+        $stmt->execute([$image_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }       
 }
