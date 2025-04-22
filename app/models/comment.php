@@ -22,7 +22,7 @@ class Comment {
             FROM comments c
             JOIN users u ON c.user_id = u.id
             WHERE c.image_id = ?
-            ORDER BY c.created_at DESC
+            ORDER BY c.created_at ASC
         ");
         $stmt->execute([$image_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
