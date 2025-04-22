@@ -43,7 +43,9 @@ document.addEventListener("DOMContentLoaded", function () {
 function timeAgo(dateString) {
     const now = new Date();
     const date = new Date(dateString);
-    const diffMs = now - date;
+    const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+
+    const diffMs = now - localDate;
     const diffSec = Math.floor(diffMs / 1000);
     const diffMin = Math.floor(diffSec / 60);
     const diffHrs = Math.floor(diffMin / 60);
