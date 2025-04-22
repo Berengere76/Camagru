@@ -1029,6 +1029,26 @@ canvas {
     border-left: 4px solid #ff28d4;
 }
 
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.comment-form-input {
+    border: 2px solid #ff28d4;
+}
+
+.comment-button {
+    background-color: #ff28d4;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
 .comment .author {
     font-weight: bold;
     margin-bottom: 0.2rem;
@@ -1070,3 +1090,18 @@ canvas {
     font-size: 1rem;
     color: #df08b4;
 }
+
+.delete-comment-btn {
+    background-color: #ff28d4;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease;
+    margin-top: 0.5rem;
+}
+.delete-comment-btn:hover {
+    background-color: #e91e63;
+}
+

@@ -2,6 +2,7 @@
 require_once dirname(__DIR__) . '/config/database.php';
 
 class Image {
+
     public static function saveImage($user_id, $image_url) {
         global $pdo;
         $stmt = $pdo->prepare("INSERT INTO images (user_id, image_url) VALUES (?, ?)");
@@ -46,3 +47,5 @@ class Image {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }       
 }
+
+?>
