@@ -28,6 +28,13 @@ class Comment {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getCommentCount($image_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM comments WHERE image_id = ?");
+        $stmt->execute([$image_id]);
+        return $stmt->fetchColumn();
+    }
+
 }
 
 ?>

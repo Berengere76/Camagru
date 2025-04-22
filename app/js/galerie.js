@@ -18,14 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         <img src="/${image.image_url}" alt="Image de la galerie">
                     </a>
                     <div class="comments-likes">
-                    <div class="likes-section">
-                        <span class="count">10</span>
-                        <img src="/images/like.png" alt="Likes" class="logo">
-                    </div>
-                    <div class="comments-section">
-                        <span class="count">10</span>
-                        <img src="/images/comment.png" alt="Comments" class="logo">
-                    </div>
+                        <div class="likes-section">
+                            <span class="count">${image.like_count}</span>
+                            <img src="/images/like.png" alt="Likes" class="logo">
+                        </div>
+                        <div class="comments-section">
+                            <span class="count">${image.comment_count}</span>
+                            <img src="/images/comment.png" alt="Comments" class="logo">
+                        </div>
                     </div>
                     <div class="image-info">
                         <span class="username">${image.username}</span>
