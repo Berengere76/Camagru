@@ -1105,3 +1105,15 @@ canvas {
     background-color: #e91e63;
 }
 
+.like-button {
+    background-color: #ea5fce;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+.like-button:hover {
+    background-color: #ce7ae8;
+}

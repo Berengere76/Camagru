@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 const image = data.image;
                 const comments = data.comments;
                 currentUserId = data.current_user_id;
+                let likeCount = data.like_count;
+                let isLiked = data.is_liked;
 
                 if (data.error) {
                     document.querySelector(".gallery").innerHTML = `<p>${data.error}</p>`;
@@ -37,6 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     `;
                 }).join("");
 
+                const likeButtonHTML = currentUserId !== null ? `
+                    <button id="like-button" class="like-button ${isLiked ? 'liked' : ''}" data-image-id="${imageId}">
+                        ❤️ <span id="like-count">${likeCount}</span> ${isLiked ? 'Unlike' : 'Like'}
+                    </button>
+                ` : `
+                    ❤️ <span id="like-count">${likeCount}</span>
+                `;
+
                 galleryContainer.innerHTML = `
                     <div class="container-image">
                         <div class="image-preview">
@@ -48,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                         <div class="likes-comments">
                             <div class="like-section">
-                                ❤️ 15 likes
+                                ${likeButtonHTML}
                             </div>
 
                             <div class="comment-section">
@@ -64,6 +74,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 `;
 
+                const likeButton = document.getElementById("like-button");
+                if (likeButton) {
+                    likeButton.addEventListener('click', handleLikeToggle);
+                }
+
                 const deleteButtons = document.querySelectorAll(".delete-comment-btn");
                 deleteButtons.forEach(button => {
                     button.addEventListener('click', handleDeleteComment);
@@ -77,6 +92,40 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => {
                 console.error("Erreur lors du chargement de l'image :", error);
                 document.querySelector(".gallery").innerHTML = "<p>Impossible de charger l'image.</p>";
+            });
+    }
+
+    function handleLikeToggle() {
+        const likeButton = this;
+        const imageId = likeButton.dataset.imageId;
+        const isCurrentlyLiked = likeButton.classList.contains('liked');
+        const action = isCurrentlyLiked ? 'unlikeimage' : 'likeimage';
+
+        fetch(`/controllers/image.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `${action}=1&imageid=${imageId}`
+        })
+            .then(response => response.json())
+            .then(data => {
+				console.log("Réponse du serveur :", data);
+                if (data.error) {
+                    alert(data.error);
+                } else if (data.success) {
+                    const likeCountElement = document.getElementById("like-count");
+                    const likeButton = document.getElementById("like-button");
+                    if (likeCountElement && likeButton) {
+                        likeCountElement.textContent = data.like_count;
+                        likeButton.classList.toggle('liked', data.is_liked);
+                        likeButton.innerHTML = `❤️ <span id="like-count">${data.like_count}</span> ${data.is_liked ? 'Unlike' : 'Like'}`;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error("Erreur lors du like/unlike de l'image :", error);
+                alert("Erreur lors du like/unlike de l'image.");
             });
     }
 

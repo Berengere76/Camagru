@@ -32,10 +32,15 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["imageid"]) && isset($_G
         exit;
     }
 
+    $likeCount = Like::getLikeCount($_GET["imageid"]);
+    $isLiked = $current_user_id ? Like::isLikedByUser($current_user_id, $_GET["imageid"]) : false;
+
     echo json_encode([
         "image" => $image,
         "comments" => $comments,
-        "current_user_id" => $current_user_id
+        "current_user_id" => $current_user_id,
+        "like_count" => $likeCount,
+        "is_liked" => $isLiked
     ]);
     exit;
 }
@@ -77,6 +82,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
     }
+
+    if (isset($_POST["likeimage"]) && isset($_POST["imageid"])) {
+        $image_id = $_POST["imageid"];
+
+        if (!Like::isLikedByUser($current_user_id, $image_id)) {
+            $liked = Like::likeImage($current_user_id, $image_id);
+            if ($liked) {
+                echo json_encode(["success" => "Image likée avec succès", "like_count" => Like::getLikeCount($image_id), "is_liked" => true]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["error" => "Erreur lors du like de l'image"]);
+            }
+        } else {
+            echo json_encode(["error" => "Vous avez déjà liké cette image"]);
+        }
+        exit;
+    }
+
+    if (isset($_POST["unlikeimage"]) && isset($_POST["imageid"])) {
+        $image_id = $_POST["imageid"];
+
+        if (Like::isLikedByUser($current_user_id, $image_id)) {
+            $unliked = Like::unlikeImage($current_user_id, $image_id);
+            if ($unliked) {
+                echo json_encode(["success" => "Image unlikée avec succès", "like_count" => Like::getLikeCount($image_id), "is_liked" => false]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["error" => "Erreur lors de l'unlike de l'image"]);
+            }
+        } else {
+            echo json_encode(["error" => "Vous n'avez pas liké cette image"]);
+        }
+        exit;
+    }
+
 }
 
 require_once dirname(__DIR__) . '/views/image.html';
