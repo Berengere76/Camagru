@@ -8,11 +8,6 @@ require_once dirname(__DIR__) . '/models/like.php';
 
 session_start();
 
-// if (!isset($_SESSION["username"])) {
-//     header("Location: login.php");
-//     exit;
-// }
-
 $images = Image::getAllImagesWithUser();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['ajax'])) {
