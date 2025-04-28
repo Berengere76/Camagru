@@ -1230,3 +1230,23 @@ canvas {
     border-color: #007bff;
 }
 
+#upload {
+    padding: 10px 20px;
+    background-color: #f965ef;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#upload:hover {
+    background-color: #d78dff;
+    transform: translateY(-2px);
+}
+
+#upload:active {
+    background-color: #d78dff;
+    transform: translateY(1px);
+}
