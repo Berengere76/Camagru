@@ -18,6 +18,7 @@ filterSelector.addEventListener('change', (event) => {
     const selectedFilter = event.target.value;
     if (selectedFilter) { 
         const filterImage = new Image();
+        captureButton.style.display = 'block';
         filterImage.onload = () => {
             selectedFilterImage = filterImage;
         };
@@ -66,6 +67,7 @@ function drawFrame() {
 }
 
 captureButton.addEventListener('click', () => {
+
     const imageData = canvas.toDataURL('image/png');
 
     fetch('/controllers/camera.php', {
