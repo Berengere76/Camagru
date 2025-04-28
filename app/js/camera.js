@@ -2,7 +2,6 @@ const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const captureButton = document.getElementById('capture');
 const filterSelector = document.getElementById('filter-selector');
-console.log('filterSelector element:', filterSelector); 
 const message = document.getElementById('message');
 let selectedFilterImage = null;
 
@@ -21,12 +20,10 @@ filterSelector.addEventListener('change', (event) => {
         const filterImage = new Image();
         filterImage.onload = () => {
             selectedFilterImage = filterImage;
-            console.log('Filter image loaded:', selectedFilterImage.src);
         };
         filterImage.src = `/images/filters/${selectedFilter}`;
     } else {
         selectedFilterImage = null;
-        console.log('Aucun filtre sélectionné');
     }
 });
 

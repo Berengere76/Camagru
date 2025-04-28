@@ -83,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 deleteButtons.forEach(button => {
                     button.addEventListener('click', handleDeleteComment);
                 });
+                
                 const currentCommentForm = document.getElementById("comment-form");
                 if (currentCommentForm) {
                     currentCommentForm.addEventListener('submit', handleCommentSubmit);
