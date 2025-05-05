@@ -22,11 +22,12 @@ filterSelector.addEventListener('change', (event) => {
         const filterImage = new Image();
         filterImage.onload = () => {
             selectedFilterImage = filterImage;
+            captureButton.disabled = false;
         };
-        captureButton.style.display = 'block';
         filterImage.src = `/images/filters/${selectedFilter}`;
     } else {
         selectedFilterImage = null;
+        captureButton.disabled = true;
     }
 });
 

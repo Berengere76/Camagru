@@ -1250,3 +1250,9 @@ canvas {
     background-color: #d78dff;
     transform: translateY(1px);
 }
+
+button:disabled,
+.capture-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
