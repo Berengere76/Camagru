@@ -1132,13 +1132,12 @@ canvas {
 }
 
 .filter-selector-container {
-    margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 0.7rem;
     color: #ff28d4;
     font-weight: bold;
     gap: 10px;
@@ -1148,8 +1147,7 @@ canvas {
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
     border: 2px solid #ff28d4;
-    border-radius: 10px;
-    margin: 20px auto;
+    margin: 5px auto 20px auto; 
     width: 30%;
     overflow: hidden;
 }
@@ -1160,7 +1158,7 @@ canvas {
     border: 1px;
     border-radius: 0.5px;
     margin-left: 10px;
-    font-size: 1rem;
+    font-size: 0.7rem;
     background-color: rgba(255, 255, 255, 0.5);
     color: #ff28d4;
 }
@@ -1255,4 +1253,88 @@ button:disabled,
 .capture-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.camera-page {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.camera-left {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.camera-right {
+    width: 100%;
+    padding-left: 0;
+    border-left: none;
+}
+
+.latest-photos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.thumbnail {
+    border: 1px solid #d65aff;
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.thumbnail img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+@media (min-width: 768px) {
+    .camera-page {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .camera-left {
+        flex: 0 0 65%;
+        margin-bottom: 0;
+    }
+
+    .camera-right {
+        flex: 0 0 30%;
+        padding-left: 20px;
+        border-left: 1px solid #cd4fff;
+    }
+
+    .latest-photos {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .thumbnail {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .latest-photos {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 20px;
+    }
+
+    .thumbnail {
+        flex-basis: calc(50% - 20px);
+        max-width: calc(50% - 20px);
+        width: auto;
+        padding: 15px;
+    }
 }

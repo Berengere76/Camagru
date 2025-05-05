@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page d'Accueil</title>
+    <title>Caméra</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/camera.css">
 </head>
 
-
 <body>
-
 
     <header>
         <div class="header">
@@ -30,33 +29,31 @@
         </div>
     </header>
 
-
-    <main>
-
-        <div class="filter-selector-container">
-            <label for="filter-selector">Choisir un filtre :</label>
-            <select id="filter-selector">
-                <option value="">Aucun filtre</option>
-                <option value="cadre1.png">Cadre</option>
-                <option value="lunettes_soleil.png">Lunettes de soleil</option>
-                <option value="chapeau_rigolo.png">Chapeau rigolo</option>
-            </select>
+    <main class="camera-page">
+        <div class="camera-left">
+            <div class="filter-selector-container">
+                <label for="filter-selector">Choisir un filtre :</label>
+                <select id="filter-selector">
+                    <option value="">Aucun filtre</option>
+                    <option value="cadre1.png">Cadre</option>
+                    <option value="lunettes_soleil.png">Lunettes de soleil</option>
+                    <option value="chapeau_rigolo.png">Chapeau rigolo</option>
+                </select>
+            </div>
+            <div class="photo-container">
+                <canvas id="canvas"></canvas>
+            </div>
+            <div class="camera-container">
+                <video id="video" autoplay style="display:none;"></video>
+                <button id="capture" class="capture-btn" disabled>Prendre une photo</button>
+                <input type="file" id="upload" accept="image/*">
+            </div>
+            <div id="message" style="display:none;">Photo prise avec succès !</div>
         </div>
-
-        <div class=photo-container>
-            <canvas id="canvas"></canvas>
+        <div class="camera-right">
+            <div class="latest-photos">
+            </div>
         </div>
-
-        <div class="camera-container">
-            <video id="video" autoplay style="display:none;"></video>
-            <button id="capture" class="capture-btn" disabled>Prendre une photo</button>
-            <input type="file" id="upload" accept="image/*">
-        </div>
-
-        <div id="message" style="display:none;">Photo prise avec succès !</div>
-
-        <script src="/js/camera.js" defer></script>
-
     </main>
 
 
@@ -64,7 +61,7 @@
         <p>© Camagru 2025</p>
     </footer>
 
+    <script src="/js/camera.js" defer></script>
 
 </body>
-
 </html>
