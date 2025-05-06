@@ -2,11 +2,14 @@ const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const captureButton = document.getElementById('capture');
 const filterSelector = document.getElementById('filter-selector');
-const message = document.getElementById('message');
-const latestPhotosContainer = document.querySelector('.latest-photos'); // Sélectionne le conteneur des miniatures
+const messageContainer = document.getElementById('message');
+const latestPhotosContainer = document.querySelector('.latest-photos');
+const uploadInput = document.getElementById('upload');
+
 let selectedFilter = null;
 let selectedFilterImage = null;
 let isCanvasActive = false;
+let uploadedImage = null;
 
 const constraints = { video: true };
 
@@ -17,7 +20,11 @@ navigator.mediaDevices.getUserMedia(constraints)
         requestAnimationFrame(drawFrame);
         loadLatestImages();
     })
-    .catch((err) => console.error("Erreur d'accès à la webcam:", err));
+    .catch((err) => {
+        console.error("Erreur d'accès à la webcam:", err);
+        displayErrorMessage("Erreur d'accès à la webcam: " + err.message);
+        captureButton.disabled = true;
+    });
 
 filterSelector.addEventListener('change', (event) => {
     selectedFilter = event.target.value;
@@ -34,48 +41,6 @@ filterSelector.addEventListener('change', (event) => {
         captureButton.disabled = true;
     }
 });
-
-const uploadInput = document.getElementById('upload');
-let uploadedImage = null;
-
-uploadInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-            uploadedImage = img;
-            video.srcObject = null;
-            isCanvasActive = true;
-            requestAnimationFrame(drawUploadedFrame);
-        };
-        img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-});
-
-function drawUploadedFrame() {
-    if (!uploadedImage) {
-        isCanvasActive = false;
-        return;
-    }
-
-    isCanvasActive = true;
-    const ctx = canvas.getContext('2d');
-    canvas.width = 600;
-    canvas.height = 450;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
-
-    if (selectedFilterImage) {
-        drawFilterOnCanvas(ctx);
-    }
-
-    requestAnimationFrame(drawUploadedFrame);
-}
 
 function drawFrame() {
     if (!video.srcObject) {
@@ -94,6 +59,25 @@ function drawFrame() {
     }
 
     requestAnimationFrame(drawFrame);
+}
+
+function drawUploadedFrame() {
+    if (!uploadedImage) {
+        isCanvasActive = false;
+        return;
+    }
+
+    isCanvasActive = true;
+    const ctx = canvas.getContext('2d');
+    canvas.width = 600;
+    canvas.height = 450;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
+
+    if (selectedFilterImage) {
+        drawFilterOnCanvas(ctx);
+    }
+    requestAnimationFrame(drawUploadedFrame);
 }
 
 function drawFilterOnCanvas(ctx) {
@@ -151,7 +135,21 @@ function loadLatestImages() {
                 latestPhotosContainer.appendChild(noPhotosMessage);
             }
         })
-        .catch(error => console.error("Erreur lors du chargement des dernières images :", error));
+        .catch(error => {
+            console.error("Erreur lors du chargement des dernières images :", error);
+            displayErrorMessage("Erreur lors du chargement des dernières images.");
+        });
+}
+
+function displayErrorMessage(message) {
+    messageContainer.textContent = message;
+    messageContainer.style.color = 'white';
+    messageContainer.style.display = 'block';
+    setTimeout(() => {
+        messageContainer.style.display = 'none';
+        messageContainer.style.backgroundColor = '';
+        messageContainer.style.color = '';
+    }, 5000);
 }
 
 captureButton.addEventListener('click', () => {
@@ -168,28 +166,65 @@ captureButton.addEventListener('click', () => {
         body: JSON.stringify({ image: imageData, filter: selectedFilter }),
         headers: { 'Content-Type': 'application/json' }
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Réponse du serveur :", data);
-            if (data.success) {
-                message.textContent = data.success;
-                message.style.display = 'block';
-                setTimeout(() => {
-                    message.style.display = 'none';
-                }, 2000);
-                loadLatestImages();
-            } else if (data.error) {
-                console.error("Erreur lors de l'enregistrement :", data.error);
-                message.textContent = data.error;
-                message.style.backgroundColor = 'red';
-                message.style.color = 'white';
-                message.style.display = 'block';
-                setTimeout(() => {
-                    message.style.display = 'none';
-                    message.style.backgroundColor = '';
-                    message.style.color = '';
-                }, 3000);
-            }
-        })
-        .catch(error => console.error("Erreur :", error));
+    .then(response => response.json())
+    .then(data => {
+        console.log("Réponse du serveur :", data);
+        if (data.success) {
+            messageContainer.textContent = data.success;
+            messageContainer.style.display = 'block';
+             setTimeout(() => {
+                messageContainer.style.display = 'none';
+                messageContainer.style.backgroundColor = '';
+            }, 2000);
+            loadLatestImages();
+        } else if (data.error) {
+            displayErrorMessage(data.error);
+        }
+    })
+    .catch(error => {
+        console.error("Erreur réseau:", error);
+        displayErrorMessage("Erreur réseau lors de l'envoi de la photo.");
+    });
+});
+
+uploadInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const allowedTypes = ['image/png', 'image/jpeg'];
+
+     if (!allowedTypes.includes(file.type)) {
+        displayErrorMessage("Type de fichier non autorisé. Veuillez uploader une image PNG, JPEG, ou GIF.");
+        uploadInput.value = '';
+        uploadedImage = null;
+        if (video.srcObject) {
+            isCanvasActive = true;
+            requestAnimationFrame(drawFrame);
+        }
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+            uploadedImage = img;
+             if (video.srcObject) {
+                video.srcObject = null;
+             }
+            isCanvasActive = true;
+            requestAnimationFrame(drawUploadedFrame);
+        };
+        img.src = e.target.result;
+    };
+    reader.onerror = () => {
+        displayErrorMessage("Erreur lors de la lecture du fichier.");
+        uploadInput.value='';
+        uploadedImage=null;
+         if (video.srcObject) {
+            isCanvasActive = true;
+            requestAnimationFrame(drawFrame);
+        }
+    }
+    reader.readAsDataURL(file);
 });

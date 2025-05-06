@@ -28,16 +28,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
+    $maxFileSize = 2 * 1024 * 1024;
+    if (strlen($imageData) > $maxFileSize) {
+        echo json_encode(["error" => "La taille de l'image dépasse la limite de 2 Mo."]);
+        exit;
+    }
+
+    if (strpos($data['image'], 'data:image/png;base64,') !== 0 &&
+        strpos($data['image'], 'data:image/jpeg;base64,') !== 0) {
+        echo json_encode(["error" => "Type de fichier non autorisé (vérification base64)."]);
+        exit;
+    }
+
+    $imageResource = imagecreatefromstring($imageData);
+    if ($imageResource === false) {
+        echo json_encode(["error" => "Le contenu de la base64 n'est pas une image valide."]);
+        imagedestroy($imageResource);
+        exit;
+    }
+    imagedestroy($imageResource);
+
     $uploadDir = dirname(__DIR__) . "/uploads/";
     if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
+        if (!mkdir($uploadDir, 0755, true)) {
+            echo json_encode(["error" => "Erreur lors de la création du répertoire d'upload."]);
+            exit;
+        }
     }
 
     $baseImageName = uniqid() . "_base.png";
     $baseImagePath = $uploadDir . $baseImageName;
 
     if (!file_put_contents($baseImagePath, $imageData)) {
-        echo json_encode(["error" => "Erreur lors de l'enregistrement de l'image de base"]);
+        echo json_encode(["error" => "Erreur lors de l'enregistrement de l'image de base."]);
         exit;
     }
 
@@ -45,10 +68,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($finalImageUrl) {
         echo json_encode(["success" => "Photo prise avec succès", "image_url" => $finalImageUrl]);
+        exit;
     } else {
-        echo json_encode(["error" => "Erreur lors de l'application du filtre ou de l'enregistrement final"]);
+        echo json_encode(["error" => "Erreur lors de l'application du filtre ou de l'enregistrement final."]);
+        exit;
     }
-    exit;
 } elseif ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['action']) && $_GET['action'] === 'latest') {
     header('Content-Type: application/json');
     $latest_images = Image::getImagesByUserId($user_id, 6);
