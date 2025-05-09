@@ -8,19 +8,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $username = trim($_POST["username"]);
         $username = htmlspecialchars($username);
         $password = $_POST["password"];
-    
-        $user = User::login($username, $password);
-    
-        if ($user) {
-            $_SESSION["username"] = $user["username"];  
-            $_SESSION["user_id"] = $user["id"];
-            header("Location: home.php");
+
+        try {
+            $user = User::login($username, $password);
+
+            if ($user) {
+                $_SESSION["username"] = $user["username"];
+                $_SESSION["user_id"] = $user["id"];
+                header("Location: home.php");
+                exit;
+            } else {
+                $_SESSION["errors"] = "Nom d'utilisateur ou mot de passe incorrect";
+                header("Location: login.php");
+                exit;
+            }
+        } catch (Exception $e) {
+            $_SESSION["errors"] = $e->getMessage();
+            header("Location: login.php");
             exit;
-        } else {
-            $_SESSION["errors"] = "Nom d'utilisateur ou mot de passe incorrect";
         }
-    }    
+    }
 }
 
 require_once dirname(__DIR__) . '/views/login.html';
+
 ?>
