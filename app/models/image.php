@@ -140,11 +140,11 @@ class Image
             $newFilterHeight = (int)(($newFilterWidth / $filterWidth) * $filterHeight);
             $destX = (int)(($baseWidth - $newFilterWidth) / 2);
             $destY = (int)($baseHeight / 3);
-        } elseif ($filterName !== 'cadre1.png') {
-            $newFilterWidth = (int)($baseWidth / 3);
-            $newFilterHeight = (int)(($newFilterWidth / $filterWidth) * $filterHeight);
-            $destX = (int)(($baseWidth - $newFilterWidth) / 2);
-            $destY = (int)(($baseHeight - $newFilterHeight) / 2);
+        } elseif ($filterName === 'cadre1.png') {
+            $newFilterWidth = $baseWidth;
+            $newFilterHeight = $baseHeight;
+            $destX = 0;
+            $destY = 0;
         }
 
         if (!imagecopyresampled($baseImage, $filterImage, $destX, $destY, 0, 0, $newFilterWidth, $newFilterHeight, $filterWidth, $filterHeight)) {
