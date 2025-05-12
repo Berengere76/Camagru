@@ -86,5 +86,13 @@ class User
         }
         return false;
     }
+
+    public static function getUserbyImageId($image_id)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT u.id, u.username, u.email FROM users u JOIN images i ON u.id = i.user_id WHERE i.id = ?");
+        $stmt->execute([$image_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>

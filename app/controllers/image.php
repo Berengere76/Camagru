@@ -7,6 +7,17 @@ require_once dirname(__DIR__) . '/models/like.php';
 
 session_start();
 
+function sendMail($to, $subject, $message)
+{
+    $headers = "From: Camagru <lebasberengere@gmail.com>\r\n";
+    if (mail($to, $subject, $message, $headers)) {
+        return true;
+    } else {
+        error_log("Erreur lors de l'envoi de l'email avec la fonction mail()");
+        return false;
+    }
+}
+
 if (!isset($_SESSION["username"])) {
     $current_user_id = null;
     header("Location: login.php");
@@ -63,6 +74,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             http_response_code(500);
             echo json_encode(["error" => "Erreur lors de l'envoi du commentaire"]);
             exit;
+        }
+        $userImage_id = User::getUserbyImageId($image_id);
+        if ($userImage_id["id"] != $user_id) {
+            sendMail($userImage_id["email"], "Nouveau commentaire sur votre image", "Vous avez reçu un nouveau commentaire sur votre image.");
         }
         echo json_encode(["success" => "Commentaire envoyé avec succès"]);
         exit;

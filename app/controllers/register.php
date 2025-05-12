@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__DIR__) . '/models/user.php';
+
 session_start();
 
 function sendVerificationEmail($email, $token)
