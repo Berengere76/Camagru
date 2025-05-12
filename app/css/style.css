@@ -638,9 +638,20 @@ canvas {
     transition: background-color 0.3s;
 }
 
+.edit-email-btn {
+    background-color: #ba8ee9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
 @media (max-width: 425px) {
     .edit-username-btn,
-    .edit-password-btn {
+    .edit-password-btn,
+    .edit-email-btn {
         margin-bottom: 2%;
     }
 }
@@ -650,6 +661,10 @@ canvas {
 }
 
 .edit-password-btn:hover {
+    background-color: #7b99da;
+}
+
+.edit-email-btn:hover {
     background-color: #7b99da;
 }
 
@@ -982,6 +997,67 @@ canvas {
     background-color: #c0a1fd;
 }
 
+/* UPDATE EMAIL */
+
+
+#updateEmail {
+    background-color: #dfaef9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    margin: auto;
+}
+
+#updateEmail h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    text-align: center;
+    color: #f968dc;
+}
+
+#updateEmail input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+#updateEmail input[type="email"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+#updateEmail button {
+    background-color: #f55cdb;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#updateEmail button:hover {
+    background-color: #f9a3f1;
+}
+
+#updateEmail .btn-secondary {
+    background-color: #9665ff;
+    margin-top: 10px;
+}
+
+#updateEmail .btn-secondary:hover {
+    background-color: #c0a1fd;
+}
 
 /* IMAGE CONTAINER */
 
@@ -1337,4 +1413,8 @@ button:disabled,
         width: auto;
         padding: 15px;
     }
+}
+
+.photo-container {
+    position: relative;
 }

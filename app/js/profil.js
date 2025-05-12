@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="user-actions">
                         <button class="edit-username-btn">Modifier le nom d'utilisateur</button>
                         <button class="edit-password-btn">Modifier le mot de passe</button>
+                        <button class="edit-email-btn">Modifier l'email</button>
                     </div>
                 
             `;
@@ -101,10 +102,22 @@ document.addEventListener("DOMContentLoaded", () => {
             editPasswordBtn.addEventListener("click", () => {
                 openUpdatePasswordForm(user.username);
             });
+
+            const editEmailBtn = document.querySelector(".edit-email-btn");
+            editEmailBtn.addEventListener("click", () => {
+                openUpdateEmailForm(user.username);
+            });
         })
         .catch(error => console.error("Erreur:", error));
 
+        function hideallForms() {
+            document.getElementById("updateUsername").style.display = "none";
+            document.getElementById("updatePassword").style.display = "none";
+            document.getElementById("updateEmail").style.display = "none";
+        }
+
         function openUpdatePasswordForm() {
+            hideallForms();
             const updatePasswordForm = document.getElementById("updatePassword");
             updatePasswordForm.style.display = "block";
             const cancelButton = document.getElementById("cancelUpdatePassword");
@@ -124,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         function openUpdateUsernameForm() {
+            hideallForms();
             const updateUsernameForm = document.getElementById("updateUsername");
             updateUsernameForm.style.display = "block";
             const cancelButton = document.getElementById("cancelUpdate");
@@ -142,7 +156,26 @@ document.addEventListener("DOMContentLoaded", () => {
                     username: username
                 };
             });
-        }        
+        }
+        
+        function openUpdateEmailForm() {
+            hideallForms();
+            const updateEmailForm = document.getElementById("updateEmail");
+            updateEmailForm.style.display = "block";
+            const cancelButton = document.getElementById("cancelUpdateEmail");
+            cancelButton.addEventListener("click", () => {
+                updateEmailForm.style.display = "none";
+            });
+        
+            const updateFormSubmit = document.getElementById("updateEmailForm");
+            updateFormSubmit.addEventListener("submit", async function () {
+                // e.preventDefault();
+                const email = document.getElementById("email").value.trim();
+                const body = {
+                    email: email
+                };
+            });
+        }
 });
 
 

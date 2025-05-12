@@ -75,6 +75,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
 
     $user = User::getUserById($user_id);
 
+    $passwordRegex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
+    if (!preg_match($passwordRegex, $new_password)) {
+        $_SESSION["errors"] = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.";
+        header("Location: profil.php");
+        exit;
+    }
+
     if (empty($password) || empty($new_password)) {
         $_SESSION["errors"] = "Tous les champs sont obligatoires";
         header("Location: profil.php");
@@ -111,6 +118,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUsername'])) {
     try {
         User::updateUsername($user_id, $username);
         $_SESSION["username"] = $username;
+        $_SESSION["success"] = "Modification réussie";
+    } catch (Exception $e) {
+        $_SESSION["errors"] = $e->getMessage();
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateEmail'])) {
+
+    $user_id = $_SESSION["user_id"];
+    $email = htmlspecialchars($_POST['email']);
+    $email = trim($email);
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION["errors"] = "Adresse email invalide";
+        header("Location: profil.php");
+        exit;
+    }
+
+    if (empty($email)) {
+        $_SESSION["errors"] = "Tous les champs sont obligatoires";
+        header("Location: profil.php");
+        exit;
+    }
+
+    try {
+        User::updateEmail($user_id, $email);
+        $_SESSION["email"] = $email;
         $_SESSION["success"] = "Modification réussie";
     } catch (Exception $e) {
         $_SESSION["errors"] = $e->getMessage();

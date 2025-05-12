@@ -74,6 +74,18 @@ class User
         return $stmt->execute([$new_username, $user_id]);
     }
 
+    public static function updateEmail($user_id, $new_email)
+    {
+        global $pdo;
+        $checkStmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+        $checkStmt->execute([$new_email]);
+        if ($checkStmt->fetch()) {
+            throw new Exception("Cet email est déjà utilisé");
+        }
+        $stmt = $pdo->prepare("UPDATE users SET email = ? WHERE id = ?");
+        return $stmt->execute([$new_email, $user_id]);
+    }
+
     public static function verifyUser($token)
     {
         global $pdo;
