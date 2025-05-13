@@ -1418,3 +1418,14 @@ button:disabled,
 .photo-container {
     position: relative;
 }
+
+.resetmdpform {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 50px;
+    position: relative;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

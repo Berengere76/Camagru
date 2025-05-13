@@ -106,5 +106,57 @@ class User
         $stmt->execute([$image_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public static function getUserByEmail($email)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function userExists($username)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public static function generateResetToken($email)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+        if ($user) {
+            $verification_token = self::generateToken();
+            $stmt = $pdo->prepare("UPDATE users SET verification_token = ? WHERE email = ?");
+            if ($stmt->execute([$verification_token, $email])) {
+                return $verification_token;
+            }
+        }
+        return false;
+    }
+
+    public static function getUserByResetToken($token) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE verification_token = ?");
+        $stmt->execute([$token]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function updatePasswordById($id, $hashedPassword) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+        return $stmt->execute([$hashedPassword, $id]);
+    }
+
+    public static function clearResetToken($id) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE users SET verification_token = NULL WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
+
 }
 ?>
