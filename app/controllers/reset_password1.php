@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $password = htmlspecialchars($password);
 
         if (empty($password)) {
-            $_SESSION["errors"] = "Tous les champs sont obligatoires";
+            $_SESSION["errors"] = "Veuillez entrer un mot de passe.";
             header("Location: reset_password1.php?token=" . $token);
             exit;
         }

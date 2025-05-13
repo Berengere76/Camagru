@@ -18,11 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	if (isset($_POST['resetmdp'])) {
 		$email = htmlspecialchars($_POST['email']);
 		$email = trim($email);
-		$username = htmlspecialchars($_POST['username']);
-		$username = trim($username);
 
-		if (empty($email) || empty($username)) {
-			$_SESSION['errors'] = "Tous les champs sont obligatoires";
+		if (empty($email)) {
+			$_SESSION['errors'] = "Veuillez entrer une adresse email.";
 			header("Location: reset_password.php");
 			exit;
 		}
@@ -40,17 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 			exit;
 		}
 
-		if (!User::userExists($username)) {
-			$_SESSION['errors'] = "Nom d'utilisateur incorrect.";
+		if ($user["is_verified"] == 0) {
+			$_SESSION['errors'] = "Votre compte n'est pas encore vérifié. Veuillez vérifier votre email.";
 			header("Location: login.php");
 			exit;
 		}
 
-		if ($username != $user["username"]) {
-			$_SESSION['errors'] = "Le nom d'utilisateur ne correspond pas à l'email fourni.";
-			header("Location: login.php");
-			exit;
-		}
 		$verificationToken = User::generateResetToken($email);
 		$resetLink = "http://localhost:8000/controllers/reset_password1.php?token=" . $verificationToken;
 		sendMail($email, "Réinitialisation du mot de passe", "Cliquez sur ce lien pour réinitialiser votre mot de passe: " . $resetLink);
