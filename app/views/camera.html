@@ -41,7 +41,10 @@
                 </select>
             </div>
             <div class="photo-container">
-                <canvas id="canvas"></canvas>
+                <div class="canvas-wrapper">
+                    <canvas id="canvas" width="500" height="375"></canvas>
+                    <img id="filter-preview" class="filter-previews" />
+                </div>
             </div>
             <div class="camera-container">
                 <video id="video" autoplay style="display:none;"></video>

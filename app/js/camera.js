@@ -28,16 +28,77 @@ navigator.mediaDevices.getUserMedia(constraints)
 
 filterSelector.addEventListener('change', (event) => {
     selectedFilter = event.target.value;
+    const filterPreview = document.getElementById('filter-preview');
+    const canvasWrapper = document.querySelector('.canvas-wrapper');
+    const rectWrapper = canvasWrapper.getBoundingClientRect();
+
     if (selectedFilter) {
-        const filterImage = new Image();
-        filterImage.onload = () => {
-            selectedFilterImage = filterImage;
+        const tempFilterImage = new Image();
+        tempFilterImage.onload = () => {
+            const naturalFilterWidth = tempFilterImage.naturalWidth;
+            const naturalFilterHeight = tempFilterImage.naturalHeight;
+            const filterAspectRatio = naturalFilterWidth / naturalFilterHeight;
+
+            filterPreview.src = tempFilterImage.src;
+            filterPreview.style.display = 'block';
+            filterPreview.style.position = 'absolute';
+            filterPreview.style.pointerEvents = 'none';
+            filterPreview.style.zIndex = '3';
+            filterPreview.style.left = '';
+            filterPreview.style.top = '';
+            filterPreview.style.width = '';
+            filterPreview.style.height = '';
+
             captureButton.disabled = false;
+
+            switch (selectedFilter) {
+                case 'chapeau_rigolo.png':
+                    const chapeauRatioLargeurSurCanvas = 0.4;
+                    const chapeauLargeurPx = rectWrapper.width * chapeauRatioLargeurSurCanvas;
+                    const chapeauHauteurPx = chapeauLargeurPx / filterAspectRatio;
+                    const chapeauHauteurPourcentage = (chapeauHauteurPx / rectWrapper.height) * 100;
+
+                    filterPreview.style.width = `${chapeauRatioLargeurSurCanvas * 100}%`;
+                    filterPreview.style.height = `${chapeauHauteurPourcentage}%`;
+                    filterPreview.style.top = `${0.03 * 100}%`;
+                    filterPreview.style.left = `${(0.5 - (chapeauRatioLargeurSurCanvas / 2)) * 100}%`;
+                    break;
+
+                case 'lunettes_soleil.png':
+                    const lunettesRatioLargeurSurCanvas = 0.5;
+                    const lunettesLargeurPx = rectWrapper.width * lunettesRatioLargeurSurCanvas;
+                    const lunettesHauteurPx = lunettesLargeurPx / filterAspectRatio;
+                    const lunettesHauteurPourcentage = (lunettesHauteurPx / rectWrapper.height) * 100;
+
+                    filterPreview.style.width = `${lunettesRatioLargeurSurCanvas * 100}%`;
+                    filterPreview.style.height = `${lunettesHauteurPourcentage}%`;
+                    filterPreview.style.top = `${0.35 * 100}%`;
+                    filterPreview.style.left = `${(0.5 - (lunettesRatioLargeurSurCanvas / 2)) * 100}%`;
+                    break;
+
+                case 'cadre1.png':
+                    filterPreview.style.width = `100%`;
+                    filterPreview.style.height = `100%`;
+                    filterPreview.style.top = `0%`;
+                    filterPreview.style.left = `0%`;
+                    break;
+
+                default:
+                    const defaultTargetWidthRatio = 0.33;
+                    const defaultLargeurPx = rectWrapper.width * defaultTargetWidthRatio;
+                    const defaultHauteurPx = defaultLargeurPx / filterAspectRatio;
+                    const defaultHauteurPourcentage = (defaultHauteurPx / rectWrapper.height) * 100;
+
+                    filterPreview.style.width = `${defaultTargetWidthRatio * 100}%`;
+                    filterPreview.style.height = `${defaultHauteurPourcentage}%`;
+                    filterPreview.style.top = `${(0.5 - (defaultHauteurPourcentage / 2))}%`;
+                    filterPreview.style.left = `${(0.5 - (defaultTargetWidthRatio / 2))}%`;
+            }
         };
-        filterImage.src = `/images/filters/${selectedFilter}`;
+        tempFilterImage.src = `/images/filters/${selectedFilter}`;
     } else {
-        selectedFilter = null;
-        selectedFilterImage = null;
+        filterPreview.src = '';
+        filterPreview.style.display = 'none';
         captureButton.disabled = true;
     }
 });
@@ -53,11 +114,6 @@ function drawFrame() {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    if (selectedFilterImage) {
-        drawFilterOnCanvas(ctx);
-    }
-
     requestAnimationFrame(drawFrame);
 }
 
@@ -73,44 +129,7 @@ function drawUploadedFrame() {
     canvas.height = 450;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
-
-    if (selectedFilterImage) {
-        drawFilterOnCanvas(ctx);
-    }
     requestAnimationFrame(drawUploadedFrame);
-}
-
-function drawFilterOnCanvas(ctx) {
-    if (!selectedFilterImage) return;
-
-    let filterX, filterY, filterWidth, filterHeight;
-    const filename = selectedFilterImage.src.split('/').pop();
-    const canvasWidth = ctx.canvas.width;
-    const canvasHeight = ctx.canvas.height;
-
-    if (filename === 'chapeau_rigolo.png') {
-        filterWidth = canvasWidth / 2.5;
-        filterHeight = (filterWidth / selectedFilterImage.naturalWidth) * selectedFilterImage.naturalHeight;
-        filterX = (canvasWidth - filterWidth) / 2;
-        filterY = canvasHeight / 50;
-    } else if (filename === 'lunettes_soleil.png') {
-        filterWidth = canvasWidth / 2;
-        filterHeight = (filterWidth / selectedFilterImage.naturalWidth) * selectedFilterImage.naturalHeight;
-        filterX = (canvasWidth - filterWidth) / 2;
-        filterY = canvasHeight / 3;
-    } else if (filename === 'cadre1.png') {
-        filterX = 0;
-        filterY = 0;
-        filterWidth = canvasWidth;
-        filterHeight = canvasHeight;
-    } else {
-        filterWidth = canvasWidth / 3;
-        filterHeight = canvasHeight / 3;
-        filterX = (canvasWidth - filterWidth) / 2;
-        filterY = (canvasHeight - filterHeight) / 2;
-    }
-
-    ctx.drawImage(selectedFilterImage, filterX, filterY, filterWidth, filterHeight);
 }
 
 function loadLatestImages() {
