@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     paginationContainer.classList.add('pagination');
     galleryContainer.parentNode.insertBefore(paginationContainer, galleryContainer.nextSibling);
 
-    const imagesPerPage = 8;
+    const imagesPerPage = 12;
     let currentPage = 1;
 
     function displayImages(page) {

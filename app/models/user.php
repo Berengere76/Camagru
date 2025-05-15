@@ -50,7 +50,7 @@ class User
     public static function getUserById($user_id)
     {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT username, password, email, created_at, is_verified FROM users WHERE id = ?");
+        $stmt = $pdo->prepare("SELECT username, password, email, com_mail, created_at, is_verified FROM users WHERE id = ?");
         $stmt->execute([$user_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

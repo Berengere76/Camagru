@@ -68,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user_id = $_SESSION["user_id"];
         $image_id = $_POST["imageid"];
         $comment = htmlspecialchars($_POST["comment-input"]);
+        $user = User::getUserById();
 
         $comment = Comment::postComment($user_id, $image_id, $comment);
         if (!$comment) {
@@ -76,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
         $userImage_id = User::getUserbyImageId($image_id);
-        if ($userImage_id["id"] != $user_id) {
+        if ($userImage_id["id"] != $user_id && $user["com_mail"] == 1) {
             sendMail($userImage_id["email"], "Nouveau commentaire sur votre image", "Vous avez reçu un nouveau commentaire sur votre image.");
         }
         echo json_encode(["success" => "Commentaire envoyé avec succès"]);
