@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 galleryContainer.innerHTML = `
                     <div class="container-image">
                         <div class="image-preview">
-                            <img src="/${image.image_url}" alt="Image de la galerie">
+                            <img src="${image.image_url}" alt="Image de la galerie">
                         </div>
                         <div class="photo-meta">
                             <span>Ajoutée le :  ${formatDate(image.created_at)}</span>

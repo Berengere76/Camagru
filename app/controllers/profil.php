@@ -51,15 +51,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'] ?? 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     header("Content-Type: application/json");
 
-    $imageUrl = $_POST['image_url'] ?? null;
+    $imageId = $_POST['image_id'] ?? null;
     $userId = $_SESSION["user_id"];
 
-    if (!$imageUrl) {
-        echo json_encode(["error" => "Image non spécifiée"]);
+    if (!$imageId) {
+        echo json_encode(["error" => "ID d'image non spécifié"]);
         exit;
     }
 
-    if (Image::deleteImage($userId, $imageUrl)) {
+    if (Image::deleteImage($userId, $imageId)) {
         echo json_encode(["success" => true]);
     } else {
         echo json_encode(["error" => "Échec de la suppression"]);
@@ -68,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
-
     $user_id = $_SESSION["user_id"];
     $password = htmlspecialchars($_POST['password']);
     $new_password = htmlspecialchars($_POST['new_password']);
@@ -102,7 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUsername'])) {
-
     $user_id = $_SESSION["user_id"];
     $username = htmlspecialchars($_POST['username']);
     $username = trim($username);
@@ -125,7 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUsername'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateEmail'])) {
-
     $user_id = $_SESSION["user_id"];
     $email = htmlspecialchars($_POST['email']);
     $email = trim($email);

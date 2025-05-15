@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const imageElements = imagesToDisplay.map(image => `
             <div class="gallery-item">
                 <a href="/controllers/image.php?imageid=${image.id}">
-                    <img src="/${image.image_url}" alt="Image de la galerie">
+                    <img src="${image.image_url}" alt="Image de la galerie">
                 </a>
                 <div class="comments-likes">
                     <div class="likes-section">

@@ -3,12 +3,14 @@ require_once dirname(__DIR__) . '/config/database.php';
 
 class Image
 {
-    public static function saveImage($userId, $imageUrl)
+    public static function saveImage($userId, $imageData)
     {
         global $pdo;
         try {
-            $stmt = $pdo->prepare("INSERT INTO images (user_id, image_url) VALUES (?, ?)");
-            $stmt->execute([$userId, $imageUrl]);
+            $stmt = $pdo->prepare("INSERT INTO images (user_id, image_data) VALUES (?, ?)");
+            $stmt->bindParam(1, $userId, PDO::PARAM_INT);
+            $stmt->bindParam(2, $imageData, PDO::PARAM_LOB);
+            $stmt->execute();
             return true;
         } catch (PDOException $e) {
             error_log("Erreur lors de l'enregistrement de l'image dans la base de données : " . $e->getMessage());
@@ -20,11 +22,19 @@ class Image
     {
         global $pdo;
         try {
-            $stmt = $pdo->query("SELECT images.id, images.image_url, users.username, images.created_at
+            $stmt = $pdo->query("SELECT images.id, images.image_data, users.username, images.created_at
                                  FROM images
                                  INNER JOIN users ON images.user_id = users.id
                                  ORDER BY images.created_at DESC");
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return array_map(function ($row) {
+                return [
+                    'id' => $row['id'],
+                    'image_url' => 'data:image/png;base64,' . base64_encode($row['image_data']),
+                    'username' => $row['username'],
+                    'created_at' => $row['created_at']
+                ];
+            }, $results);
         } catch (PDOException $e) {
             error_log("Erreur lors de la récupération de toutes les images : " . $e->getMessage());
             return [];
@@ -35,7 +45,7 @@ class Image
     {
         global $pdo;
         try {
-            $sql = "SELECT id, image_url, created_at FROM images WHERE user_id = ? ORDER BY created_at DESC";
+            $sql = "SELECT id, image_data, created_at FROM images WHERE user_id = ? ORDER BY created_at DESC";
             if ($limit !== null) {
                 $sql .= " LIMIT ?";
                 $stmt = $pdo->prepare($sql);
@@ -46,27 +56,22 @@ class Image
                 $stmt->bindValue(1, $userId, PDO::PARAM_INT);
             }
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return array_map(function ($row) {
+                return ['id' => $row['id'], 'image_url' => 'data:image/png;base64,' . base64_encode($row['image_data']), 'created_at' => $row['created_at']];
+            }, $results);
         } catch (PDOException $e) {
             error_log("Erreur lors de la récupération des images par utilisateur : " . $e->getMessage());
             return [];
         }
     }
 
-    public static function deleteImage($userId, $imageUrl)
+    public static function deleteImage($userId, $imageId)
     {
         global $pdo;
-        $filePath = dirname(__DIR__) . '/' . $imageUrl;
-        if (file_exists($filePath)) {
-            if (!unlink($filePath)) {
-                error_log("Erreur lors de la suppression du fichier : " . $filePath);
-                return false;
-            }
-        }
-
         try {
-            $stmt = $pdo->prepare("DELETE FROM images WHERE user_id = ? AND image_url = ?");
-            $stmt->execute([$userId, $imageUrl]);
+            $stmt = $pdo->prepare("DELETE FROM images WHERE user_id = ? AND id = ?");
+            $stmt->execute([$userId, $imageId]);
             return $stmt->rowCount() > 0;
         } catch (PDOException $e) {
             error_log("Erreur lors de la suppression de l'image de la base de données : " . $e->getMessage());
@@ -78,44 +83,36 @@ class Image
     {
         global $pdo;
         try {
-            $stmt = $pdo->prepare("SELECT images.image_url, images.created_at, users.username
+            $stmt = $pdo->prepare("SELECT images.image_data, images.created_at, users.username
                                    FROM images
                                    INNER JOIN users ON images.user_id = users.id
                                    WHERE images.id = ?");
             $stmt->execute([$imageId]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return ['image_url' => 'data:image/png;base64,' . base64_encode($result['image_data']), 'created_at' => $result['created_at'], 'username' => $result['username']];
+            } else {
+                return false;
+            }
         } catch (PDOException $e) {
             error_log("Erreur lors de la récupération de l'image par ID : " . $e->getMessage());
             return false;
         }
     }
 
-    public static function applyFilterAndSave($userId, $baseImagePath, $filterName)
+    public static function applyFilter($imageData, $filterName)
     {
-        $uploadDir = dirname(__DIR__) . "/uploads/";
         $filterPath = dirname(__DIR__) . "/images/filters/" . $filterName;
-        $finalImageName = uniqid() . "_filtered.png";
-        $finalImageUrl = "uploads/" . $finalImageName;
-        $finalFilePath = $uploadDir . $finalImageName;
 
-        if (!file_exists($baseImagePath)) {
-            error_log("Erreur: Image de base introuvable : " . $baseImagePath);
-            return false;
-        }
-        if (!file_exists($filterPath)) {
-            error_log("Erreur: Filtre introuvable : " . $filterPath);
-            return false;
-        }
-
-        $baseImage = imagecreatefrompng($baseImagePath);
+        $baseImage = imagecreatefromstring($imageData);
         $filterImage = imagecreatefrompng($filterPath);
 
         if (!$baseImage) {
-            error_log("Erreur: Impossible de créer l'image de base à partir de : " . $baseImagePath);
+            error_log("Erreur: Impossible de créer l'image de base.");
             return false;
         }
         if (!$filterImage) {
-            error_log("Erreur: Impossible de créer l'image du filtre à partir de : " . $filterPath);
+            error_log("Erreur: Impossible de créer l'image du filtre : " . $filterPath);
             imagedestroy($baseImage);
             return false;
         }
@@ -154,19 +151,14 @@ class Image
             return false;
         }
 
-        if (imagepng($baseImage, $finalFilePath)) {
-            imagedestroy($baseImage);
-            imagedestroy($filterImage);
-            if (self::saveImage($userId, $finalImageUrl)) {
-                return $finalImageUrl;
-            } else {
-                return false;
-            }
-        } else {
-            error_log("Erreur: Impossible d'enregistrer l'image finale : " . $finalFilePath);
-            imagedestroy($baseImage);
-            imagedestroy($filterImage);
-            return false;
-        }
+        ob_start();
+        imagepng($baseImage);
+        $finalImageData = ob_get_contents();
+        ob_end_clean();
+
+        imagedestroy($baseImage);
+        imagedestroy($filterImage);
+
+        return $finalImageData;
     }
 }

@@ -46,31 +46,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         imagedestroy($imageResource);
         exit;
     }
-    imagedestroy($imageResource);
 
-    $uploadDir = dirname(__DIR__) . "/uploads/";
-    if (!is_dir($uploadDir)) {
-        if (!mkdir($uploadDir, 0755, true)) {
-            echo json_encode(["error" => "Erreur lors de la création du répertoire d'upload."]);
-            exit;
+    $filteredImageData = Image::applyFilter($imageData, $filterName);
+
+    if ($filteredImageData) {
+        if (Image::saveImage($user_id, $filteredImageData)) {
+            echo json_encode(["success" => "Photo prise avec succès"]);
+        } else {
+            echo json_encode(["error" => "Erreur lors de l'enregistrement de l'image dans la base de données."]);
         }
-    }
-
-    $baseImageName = uniqid() . "_base.png";
-    $baseImagePath = $uploadDir . $baseImageName;
-
-    if (!file_put_contents($baseImagePath, $imageData)) {
-        echo json_encode(["error" => "Erreur lors de l'enregistrement de l'image de base."]);
-        exit;
-    }
-
-    $finalImageUrl = Image::applyFilterAndSave($_SESSION["user_id"], $baseImagePath, $filterName);
-
-    if ($finalImageUrl) {
-        echo json_encode(["success" => "Photo prise avec succès", "image_url" => $finalImageUrl]);
         exit;
     } else {
-        echo json_encode(["error" => "Erreur lors de l'application du filtre ou de l'enregistrement final."]);
+        echo json_encode(["error" => "Erreur lors de l'application du filtre."]);
         exit;
     }
 } elseif ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['action']) && $_GET['action'] === 'latest') {

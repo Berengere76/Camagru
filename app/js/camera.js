@@ -142,7 +142,7 @@ function loadLatestImages() {
                     const thumbnailDiv = document.createElement('div');
                     thumbnailDiv.classList.add('thumbnail');
                     const imgElement = document.createElement('img');
-                    imgElement.src = `/${image.image_url}`;
+                    imgElement.src = image.image_url;
                     imgElement.alt = 'Photo récente';
                     imgElement.width = 100;
                     thumbnailDiv.appendChild(imgElement);
