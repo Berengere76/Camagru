@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['info_profil'])) {
     $user = User::getUserById($_SESSION["user_id"]);
 
     if (!$user) {
-        http_response_code(404);
         echo json_encode(["error" => "Utilisateur non trouvé"]);
         exit;
     }
@@ -31,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['imageid'])) {
     $images = Image::getImagesByUserId($_SESSION["user_id"]);
 
     if (!$images) {
-        http_response_code(404);
         echo json_encode(["error" => "Aucune image trouvée"]);
         exit;
     }
@@ -146,6 +144,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateEmail'])) {
     } catch (Exception $e) {
         $_SESSION["errors"] = $e->getMessage();
     }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['com_mail']) && $_POST['com_mail'] === 'toggle') {
+    $user_id = $_SESSION["user_id"];
+    $user = User::getUserById($user_id);
+    $newComMailStatus = $user['com_mail'] == 0 ? 1 : 0;
+
+    if ($newComMailStatus === 0) {
+        if (User::disabledComMail($user_id)) {
+            echo json_encode(['success' => true, 'new_com_mail' => 0]);
+        } else {
+            echo json_encode(['error' => 'Erreur lors de la désactivation des notifications par e-mail']);
+        }
+    } elseif ($newComMailStatus === 1) {
+        if (User::enabledComMail($user_id)) {
+            echo json_encode(['success' => true, 'new_com_mail' => 1]);
+        } else {
+            echo json_encode(['error' => 'Erreur lors de l\'activation des notifications par e-mail']);
+        }
+    }
+    exit();
 }
 
 require_once dirname(__DIR__) . '/views/profil.html';

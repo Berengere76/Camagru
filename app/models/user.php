@@ -102,7 +102,7 @@ class User
     public static function getUserbyImageId($image_id)
     {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT u.id, u.username, u.email FROM users u JOIN images i ON u.id = i.user_id WHERE i.id = ?");
+        $stmt = $pdo->prepare("SELECT u.id, u.username, com_mail, u.email FROM users u JOIN images i ON u.id = i.user_id WHERE i.id = ?");
         $stmt->execute([$image_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -156,6 +156,20 @@ class User
         global $pdo;
         $stmt = $pdo->prepare("UPDATE users SET verification_token = NULL WHERE id = ?");
         return $stmt->execute([$id]);
+    }
+
+    public static function disabledComMail($user_id)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE users SET com_mail = 0 WHERE id = ?");
+        return $stmt->execute([$user_id]);
+    }
+
+    public static function enabledComMail($user_id)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE users SET com_mail = 1 WHERE id = ?");
+        return $stmt->execute([$user_id]);
     }
 
 }

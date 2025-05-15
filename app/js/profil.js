@@ -176,6 +176,59 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
             });
         }
+
+        const toggleComMailButton = document.querySelector(".toggle_com_mail");
+
+    if (toggleComMailButton) {
+        toggleComMailButton.addEventListener("click", () => {
+            fetch('/controllers/profil.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'com_mail=toggle'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erreur lors de la mise à jour des notifications par e-mail");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    toggleComMailButton.setAttribute("data-com-mail", data.new_com_mail);
+                    toggleComMailButton.textContent = parseInt(data.new_com_mail) === 1 ? "Désactiver les notifications par e-mail" : "Activer les notifications par e-mail";
+                } else if (data.error) {
+                    alert("Erreur : " + data.error);
+                }
+            })
+            .catch(error => {
+                console.error("Erreur:", error);
+                alert("Une erreur s'est produite lors de la mise à jour.");
+            });
+        });
+
+        fetch('/controllers/profil.php?info_profil', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Erreur de chargement du profil");
+            }
+            return response.json();
+        })
+        .then(user => {
+            if (user && typeof user.com_mail !== 'undefined') {
+                toggleComMailButton.setAttribute("data-com-mail", user.com_mail);
+                toggleComMailButton.textContent = user.com_mail === 1 ? "Désactiver les notifications par e-mail" : "Activer les notifications par e-mail";
+            }
+        })
+        .catch(error => console.error("Erreur:", error));
+    }
+        
 });
 
 
